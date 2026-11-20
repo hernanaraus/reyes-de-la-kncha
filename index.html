@@ -1,0 +1,3440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reyes de la Kncha | Control y Proyección TV - Tiempo Fuera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --bg-card: rgba(20, 20, 24, 0.92);
+      --orange-main: #ff4d00;
+      --orange-glow: rgba(255, 77, 0, 0.45);
+      --gold-chosen: #facc15;
+      --green-win: #22c55e;
+      --red-alert: #ef4444;
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-subtle: rgba(255, 255, 255, 0.12);
+      --header-height: 94px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      padding-top: var(--header-height);
+    }
+
+    body.tv-mode {
+      padding-top: 0;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .street-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255, 77, 0, 0.25) 0%, transparent 48%),
+        radial-gradient(circle at 15% 80%, rgba(255, 77, 0, 0.16) 0%, transparent 52%),
+        linear-gradient(180deg, rgba(9, 9, 11, 0.78) 0%, rgba(9, 9, 11, 0.97) 100%),
+        url('https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    }
+
+    /* Pantalla de Login / Control de Acceso */
+    .auth-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      background: rgba(9, 9, 11, 0.92);
+      backdrop-filter: blur(16px);
+    }
+
+    .auth-card {
+      background: #141418;
+      border: 1px solid rgba(255, 77, 0, 0.45);
+      border-top: 5px solid var(--orange-main);
+      border-radius: 18px;
+      max-width: 440px;
+      width: 100%;
+      padding: 2.25rem 2rem;
+      text-align: center;
+      box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85);
+    }
+
+    .auth-card h2 {
+      font-family: 'Anton', sans-serif;
+      font-size: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 0.75rem 0 0.4rem;
+    }
+
+    .btn-google-login {
+      width: 100%;
+      background: #ffffff;
+      color: #09090b;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 0.98rem;
+      padding: 0.85rem 1.2rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1.4rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-google-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Header Fijo Superior */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 2rem;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(9, 9, 11, 0.94);
+      backdrop-filter: blur(14px);
+      gap: 1rem;
+      z-index: 1000;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.75);
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      cursor: pointer;
+    }
+
+    .logo-rk-img {
+      height: 68px;
+      width: auto;
+      object-fit: contain;
+      mix-blend-mode: lighten;
+      filter: drop-shadow(0 0 10px rgba(255, 77, 0, 0.35));
+      transition: transform 0.2s ease;
+    }
+
+    .logo-rk-img:hover { transform: scale(1.03); }
+
+    .rk-subtitle {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-left: 2px solid var(--orange-main);
+      padding-left: 0.75rem;
+    }
+
+    .brand-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-tv-launch {
+      background: linear-gradient(135deg, #ff4d00 0%, #ff7b00 100%);
+      color: #000;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 0 18px rgba(255, 77, 0, 0.45);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-tv-launch:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(255, 77, 0, 0.7);
+    }
+
+    .created-by-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-align: right;
+      line-height: 1.25;
+    }
+
+    .logo-tf-img {
+      height: 74px;
+      width: auto;
+      object-fit: contain;
+      filter:
+        drop-shadow(0 0 2px #ffffff)
+        drop-shadow(0 0 2px #ffffff)
+        drop-shadow(0 0 12px rgba(255, 255, 255, 0.75));
+      transition: transform 0.2s ease;
+    }
+
+    .logo-tf-img:hover { transform: scale(1.04); }
+
+    main {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem;
+      flex: 1;
+    }
+
+    .hidden { display: none !important; }
+
+    /* Botones generales */
+    .btn-primary {
+      background: var(--orange-main);
+      color: #000;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: none;
+      padding: 0.75rem 1.35rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--orange-glow);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+      color: #000;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: none;
+      padding: 0.75rem 1.35rem;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(250, 204, 21, 0.35);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 0.62rem 1rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.84rem;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.18); }
+
+    .btn-success {
+      background: var(--green-win);
+      color: #000;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border: none;
+      padding: 0.75rem 1.35rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-danger {
+      background: rgba(220, 38, 38, 0.18);
+      color: #f87171;
+      border: 1px solid rgba(220, 38, 38, 0.4);
+      padding: 0.62rem 1rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.84rem;
+      cursor: pointer;
+    }
+
+    .btn-danger-solid {
+      background: #dc2626;
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border: none;
+      padding: 0.75rem 1.35rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-second-chance {
+      background: rgba(255, 193, 7, 0.16);
+      color: #facc15;
+      border: 1px solid rgba(250, 204, 21, 0.45);
+      padding: 0.42rem 0.75rem;
+      border-radius: 7px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-second-chance:hover {
+      background: rgba(250, 204, 21, 0.3);
+    }
+
+    /* VISTA 1: LANDING / INICIO */
+    .hero { text-align: center; margin-bottom: 1.75rem; }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--orange-main);
+      color: #000;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 0.22rem 0.9rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transform: skewX(-10deg);
+      margin-bottom: 0.6rem;
+    }
+
+    .hero h1 {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      line-height: 1.05;
+    }
+
+    .hero h1 .highlight { color: var(--orange-main); display: block; }
+
+    .brush-line {
+      width: 200px;
+      height: 5px;
+      background: var(--orange-main);
+      margin: 0.7rem auto 0;
+      border-radius: 50% 20% / 10% 40%;
+      box-shadow: 0 0 15px var(--orange-glow);
+    }
+
+    .stop-setup-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-left: 5px solid var(--orange-main);
+      border-radius: 12px;
+      padding: 1.35rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .stop-setup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .stop-setup-header h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.25rem;
+      text-transform: uppercase;
+    }
+
+    .status-pill {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.28rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      align-items: end;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #fff;
+      padding: 0.72rem 0.95rem;
+      border-radius: 8px;
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--orange-main);
+    }
+
+    .section-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.9rem;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.35rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .cat-card:hover {
+      border-color: var(--orange-main);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(255, 77, 0, 0.22);
+    }
+
+    .cat-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--orange-main), #ff8800);
+    }
+
+    .cat-card.chosen-card {
+      border-color: rgba(250, 204, 21, 0.45);
+      background: linear-gradient(145deg, rgba(30, 26, 14, 0.94), rgba(18, 18, 22, 0.95));
+      margin-bottom: 1.75rem;
+    }
+
+    .cat-card.chosen-card::before {
+      background: linear-gradient(90deg, #facc15, #ff8800);
+    }
+
+    .cat-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--orange-main);
+      letter-spacing: 1px;
+      margin-bottom: 0.35rem;
+    }
+
+    .cat-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .cat-rules {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 1.1rem;
+    }
+
+    .cat-winner-tag {
+      background: rgba(34, 197, 94, 0.16);
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      color: #4ade80;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+    }
+
+    .cat-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .cat-enter { color: var(--orange-main); }
+
+    .db-panel {
+      background: rgba(15, 15, 18, 0.92);
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* VISTA 2: PANEL DE COMPETENCIA */
+    .comp-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .comp-title-box h2 {
+      font-family: 'Anton', sans-serif;
+      font-size: 2.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--orange-main);
+      line-height: 1;
+    }
+
+    .comp-title-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    .comp-grid {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .comp-grid { grid-template-columns: 1fr; }
+    }
+
+    .panel-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .panel-box.finalists-box {
+      border: 1px solid rgba(255, 77, 0, 0.55);
+      box-shadow: 0 8px 26px rgba(255, 77, 0, 0.14);
+    }
+
+    .panel-box.import-box {
+      border: 1px solid rgba(250, 204, 21, 0.35);
+      background: rgba(24, 22, 16, 0.9);
+    }
+
+    .panel-box h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .add-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .add-row input, .add-row select {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      min-width: 0;
+    }
+
+    .inscritos-list {
+      list-style: none;
+      max-height: 300px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .inscrito-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.55rem 0.8rem;
+      border-radius: 7px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .btn-del-mini {
+      background: transparent;
+      border: none;
+      color: #f87171;
+      font-weight: 800;
+      cursor: pointer;
+      padding: 0.2rem 0.45rem;
+    }
+
+    /* MARCADOR EN VIVO (CONTROL) */
+    .scoreboard-box {
+      background: linear-gradient(145deg, #141418 0%, #09090b 100%);
+      border: 2px solid var(--orange-main);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 12px 35px rgba(255, 77, 0, 0.2);
+    }
+
+    .sb-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .sb-round-badge {
+      background: var(--orange-main);
+      color: #000;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      padding: 0.25rem 0.8rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .record-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 77, 0, 0.5);
+      color: #fff;
+      padding: 0.3rem 0.85rem;
+      border-radius: 8px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+    }
+
+    .record-pill span {
+      color: var(--orange-main);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .timer-display {
+      text-align: center;
+      margin: 0.5rem 0 1.25rem;
+    }
+
+    .timer-digits {
+      font-family: 'Anton', sans-serif;
+      font-size: 4.2rem;
+      letter-spacing: 3px;
+      line-height: 1;
+      color: #fff;
+      text-shadow: 0 0 20px rgba(255, 77, 0, 0.4);
+    }
+
+    .timer-digits.danger {
+      color: #ef4444;
+      animation: pulse 0.8s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { opacity: 1; }
+      to { opacity: 0.45; }
+    }
+
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 0.65rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .versus-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .versus-grid { grid-template-columns: 1fr; }
+    }
+
+    .team-score-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 1.1rem;
+      text-align: center;
+    }
+
+    .team-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.55rem;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      word-break: break-word;
+    }
+
+    .team-pts {
+      font-family: 'Anton', sans-serif;
+      font-size: 4.8rem;
+      color: var(--orange-main);
+      line-height: 1;
+      margin: 0.4rem 0 0.9rem;
+    }
+
+    .pts-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-pt {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      padding: 0.65rem 1.1rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      min-width: 66px;
+    }
+
+    .btn-pt-1 { background: #fff; color: #000; }
+    .btn-pt-2 { background: var(--orange-main); color: #000; }
+    .btn-pt-minus { background: rgba(255,255,255,0.14); color: #fff; }
+
+    .vs-divider {
+      font-family: 'Anton', sans-serif;
+      font-size: 2rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .match-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      margin-bottom: 0.65rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .match-card.active-match {
+      border-color: var(--orange-main);
+      background: rgba(255, 77, 0, 0.12);
+    }
+
+    .match-card.done-match {
+      opacity: 0.72;
+      border-left: 4px solid var(--green-win);
+    }
+
+    .match-card.repechaje-match {
+      border-left: 4px solid var(--gold-chosen);
+      background: rgba(250, 204, 21, 0.07);
+    }
+
+    /* Tabla Triples */
+    .triples-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .triples-table th, .triples-table td {
+      padding: 0.75rem 0.6rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .triples-table th {
+      font-family: 'Oswald', sans-serif;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .row-shooter-active {
+      background: rgba(255, 77, 0, 0.16);
+      outline: 1px solid var(--orange-main);
+    }
+
+    .champion-banner {
+      background: linear-gradient(90deg, rgba(255,77,0,0.25), rgba(34,197,94,0.25));
+      border: 2px solid var(--green-win);
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .champion-banner h3 {
+      font-family: 'Anton', sans-serif;
+      font-size: 2.2rem;
+      color: #4ade80;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* MODAL DE SEGURIDAD (LIMPIAR STOP) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.84);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 3000;
+      padding: 1rem;
+    }
+
+    .modal-card {
+      background: #141418;
+      border: 2px solid #ef4444;
+      border-radius: 16px;
+      max-width: 480px;
+      width: 100%;
+      padding: 1.75rem;
+      box-shadow: 0 20px 60px rgba(239, 68, 68, 0.35);
+      text-align: center;
+    }
+
+    .modal-card h3 {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.9rem;
+      color: #f87171;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.65rem;
+    }
+
+    .math-challenge-box {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .math-question {
+      font-family: 'Anton', sans-serif;
+      font-size: 2.2rem;
+      color: var(--gold-chosen);
+      letter-spacing: 2px;
+      margin: 0.4rem 0 0.8rem;
+    }
+
+    .math-challenge-box input {
+      width: 140px;
+      text-align: center;
+      font-family: 'Anton', sans-serif;
+      font-size: 1.6rem;
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      background: #09090b;
+      color: #fff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.15rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(9, 9, 11, 0.9);
+    }
+
+    /* ================= MODO PROYECCIÓN TV (ESTADIO) ================= */
+    #view-tv {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2vh 3vw;
+      z-index: 2000;
+    }
+
+    .tv-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid rgba(255, 77, 0, 0.45);
+      padding-bottom: 1.5vh;
+    }
+
+    .tv-brand-left {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .tv-logo-rk {
+      height: 10vh;
+      max-height: 95px;
+      object-fit: contain;
+      mix-blend-mode: lighten;
+      filter: drop-shadow(0 0 14px rgba(255, 77, 0, 0.5));
+    }
+
+    .tv-stop-info {
+      border-left: 4px solid var(--orange-main);
+      padding-left: 1.1rem;
+    }
+
+    .tv-stop-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(1.5rem, 2.8vw, 2.6rem);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1.05;
+    }
+
+    .tv-stop-sub {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1rem, 1.6vw, 1.45rem);
+      color: var(--orange-main);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .tv-logo-tf {
+      height: 11vh;
+      max-height: 105px;
+      object-fit: contain;
+      filter:
+        drop-shadow(0 0 2px #ffffff)
+        drop-shadow(0 0 2px #ffffff)
+        drop-shadow(0 0 16px rgba(255, 255, 255, 0.85));
+    }
+
+    .tv-stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 1.5vh 0;
+    }
+
+    .tv-idle-tag {
+      background: var(--orange-main);
+      color: #000;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.1rem, 2vw, 1.7rem);
+      padding: 0.4rem 1.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transform: skewX(-10deg);
+      margin-bottom: 1.8vh;
+    }
+
+    .tv-idle-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(3.2rem, 8.2vw, 7.8rem);
+      text-transform: uppercase;
+      line-height: 0.98;
+      letter-spacing: 2px;
+    }
+
+    .tv-idle-title span {
+      display: block;
+      color: var(--orange-main);
+      text-shadow: 0 0 40px rgba(255, 77, 0, 0.45);
+    }
+
+    .tv-champs-strip {
+      width: 100%;
+      max-width: 1450px;
+      margin-top: 2.5vh;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1vw;
+    }
+
+    .tv-champ-pill {
+      background: rgba(18, 18, 22, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-top: 4px solid rgba(255, 255, 255, 0.25);
+      border-radius: 12px;
+      padding: 1.1vh 0.8vw;
+      text-align: center;
+    }
+
+    .tv-champ-pill.won {
+      border-color: rgba(34, 197, 94, 0.55);
+      border-top: 4px solid var(--green-win);
+      background: rgba(20, 35, 24, 0.9);
+      box-shadow: 0 0 22px rgba(34, 197, 94, 0.2);
+    }
+
+    .tv-champ-cat {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(0.75rem, 1.05vw, 0.95rem);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .tv-champ-winner {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(1.05rem, 1.55vw, 1.45rem);
+      color: #4ade80;
+      text-transform: uppercase;
+      margin-top: 0.3vh;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tv-champ-pending {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(0.85rem, 1.15vw, 1rem);
+      color: rgba(255, 255, 255, 0.35);
+      margin-top: 0.3vh;
+      text-transform: uppercase;
+    }
+
+    .tv-chosen-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5vw;
+      max-width: 1400px;
+      margin-top: 2vh;
+    }
+
+    .tv-chosen-candidate {
+      background: rgba(24, 22, 16, 0.92);
+      border: 2px solid rgba(250, 204, 21, 0.65);
+      border-radius: 16px;
+      padding: 2vh 2.5vw;
+      min-width: 240px;
+      box-shadow: 0 10px 30px rgba(250, 204, 21, 0.18);
+    }
+
+    .tv-chosen-candidate-name {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .tv-chosen-elected-box {
+      background: linear-gradient(145deg, rgba(250, 204, 21, 0.25), rgba(255, 77, 0, 0.28));
+      border: 4px solid var(--gold-chosen);
+      border-radius: 28px;
+      padding: 4.5vh 6vw;
+      box-shadow: 0 0 80px rgba(250, 204, 21, 0.4);
+    }
+
+    .tv-cat-pill {
+      background: rgba(255, 77, 0, 0.18);
+      border: 2px solid var(--orange-main);
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.2rem, 2.2vw, 2rem);
+      padding: 0.35rem 1.8rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 1.5vh;
+    }
+
+    .tv-clock {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(4.5rem, 11vw, 9.5rem);
+      line-height: 0.95;
+      letter-spacing: 4px;
+      color: #fff;
+      text-shadow: 0 0 30px rgba(255, 77, 0, 0.55);
+      margin-bottom: 2.5vh;
+    }
+
+    .tv-clock.danger {
+      color: #ef4444;
+      animation: pulse 0.7s infinite alternate;
+    }
+
+    .tv-duel-board {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 3vw;
+      width: 100%;
+      max-width: 1500px;
+      align-items: center;
+    }
+
+    .tv-team-box {
+      background: rgba(18, 18, 22, 0.88);
+      border: 2px solid rgba(255, 255, 255, 0.16);
+      border-top: 8px solid var(--orange-main);
+      border-radius: 22px;
+      padding: 3vh 2vw;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
+    }
+
+    .tv-team-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2rem, 4.2vw, 3.8rem);
+      text-transform: uppercase;
+      line-height: 1.08;
+      margin-bottom: 1.5vh;
+      word-break: break-word;
+    }
+
+    .tv-team-score {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(6.5rem, 16vw, 14rem);
+      color: var(--orange-main);
+      line-height: 0.92;
+      text-shadow: 0 0 35px rgba(255, 77, 0, 0.4);
+    }
+
+    .tv-vs {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      color: var(--text-muted);
+    }
+
+    .tv-triple-card {
+      background: rgba(18, 18, 22, 0.9);
+      border: 3px solid var(--orange-main);
+      border-radius: 24px;
+      padding: 3.5vh 5vw;
+      min-width: 58vw;
+      box-shadow: 0 20px 60px rgba(255, 77, 0, 0.25);
+    }
+
+    .tv-triple-record {
+      margin-top: 2.5vh;
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1.3rem, 2.4vw, 2.1rem);
+      color: #facc15;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .tv-champ-box {
+      background: linear-gradient(145deg, rgba(255,77,0,0.28), rgba(34,197,94,0.28));
+      border: 4px solid var(--green-win);
+      border-radius: 28px;
+      padding: 5vh 6vw;
+      box-shadow: 0 0 70px rgba(34, 197, 94, 0.35);
+    }
+
+    .tv-champ-name {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(3.5rem, 8.5vw, 7.5rem);
+      color: #4ade80;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-top: 1vh;
+    }
+
+    .tv-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      padding-top: 1.2vh;
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(0.9rem, 1.3vw, 1.15rem);
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 640px) {
+      :root { --header-height: 76px; }
+      header { padding: 0.5rem 1rem; }
+      .logo-rk-img { height: 48px; }
+      .logo-tf-img { height: 50px; }
+      .rk-subtitle, .created-by-label { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="street-bg"></div>
+
+  <!-- ================= PANTALLA DE ACCESO (SOLO MODO CONTROL) ================= -->
+  <div id="authGate" class="auth-gate hidden">
+    <div class="auth-card">
+      <img
+        src="logo-reyes.png"
+        alt="Reyes de la Kncha"
+        style="height:82px; mix-blend-mode:lighten;"
+        onerror="this.outerHTML='<div style=\'font-family:Anton,sans-serif;font-size:2rem;color:#ff4d00;\'>👑 REYES DE LA KNCHA</div>'"
+      />
+      <h2>Mesa de Control</h2>
+      <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.45;">
+        Acceso restringido a operadores autorizados de <strong>Reyes de la Kncha</strong>.
+      </p>
+
+      <div id="authLoadingText" style="margin-top:1.2rem; font-size:0.88rem; color:var(--orange-main); font-weight:700;">
+        Verificando sesión...
+      </div>
+
+      <button id="btnGoogleLogin" class="btn-google-login hidden" onclick="iniciarSesionGoogle()">
+        <svg width="20" height="20" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Continuar con Google
+      </button>
+
+      <div id="authErrorBox" class="hidden" style="margin-top:1.1rem; background:rgba(220,38,38,0.16); border:1px solid #ef4444; color:#fca5a5; padding:0.75rem; border-radius:8px; font-size:0.84rem;"></div>
+
+      <div style="margin-top:1.4rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.1);">
+        <a href="?tv=1" style="color:var(--orange-main); font-size:0.84rem; font-weight:700; text-decoration:none;">
+          📺 Ir a Pantalla de Proyección TV (Solo Lectura) →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra Superior Fija (Modo Control) -->
+  <header id="mainHeader" class="hidden">
+    <div class="brand-left" onclick="volverInicio()" title="Volver al Inicio">
+      <img
+        src="logo-reyes.png"
+        alt="Reyes de la Kncha"
+        class="logo-rk-img"
+        onerror="this.outerHTML='<div style=\'font-family:Anton,sans-serif;font-size:1.5rem;color:#ff4d00;\'>👑 REYES DE LA KNCHA</div>'"
+      />
+      <div class="rk-subtitle">De la pantalla<br>a la kncha</div>
+    </div>
+
+    <div class="brand-right">
+      <button class="btn-secondary" onclick="copiarLinkProyector()" title="Copia el enlace público para proyectar en cualquier TV o celular">
+        📋 Link Proyector
+      </button>
+      <button class="btn-tv-launch" onclick="abrirPantallaTV()" title="Abre el marcador gigante en una ventana separada para proyectar">
+        📺 Pantalla TV
+      </button>
+      <button class="btn-danger" onclick="cerrarSesionGoogle()" title="Cerrar sesión de operador">
+        Salir
+      </button>
+      <div class="created-by-label">App oficial<br>creada por</div>
+      <img
+        src="logo-tiempofuera.png"
+        alt="Tiempo Fuera"
+        class="logo-tf-img"
+        onerror="this.outerHTML='<div style=\'font-family:Anton,sans-serif;font-style:italic;font-size:1.45rem;color:#fff;text-shadow:0 0 8px #fff;\'>TIEMPO FUERA</div>'"
+      />
+    </div>
+  </header>
+
+  <main id="mainControlContainer" class="hidden">
+    <!-- ================= VISTA 1: LANDING PAGE ================= -->
+    <div id="view-home">
+      <section class="hero">
+        <div class="hero-tag">Sistema Oficial de Competencia Streetball</div>
+        <h1>BUSCANDO AL <span class="highlight">REY DE LA KNCHA</span></h1>
+        <div class="brush-line"></div>
+      </section>
+
+      <!-- Configuración del Stop -->
+      <section class="stop-setup-card">
+        <div class="stop-setup-header">
+          <h2>📍 Datos de la Fecha / Stop Actual</h2>
+          <span class="status-pill" id="dbStatus">● Conectado a Nube en Vivo</span>
+        </div>
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="stopName">Nombre o N° de Stop</label>
+            <input type="text" id="stopName" placeholder="Ej: Octava Fecha - Cancha Central" />
+          </div>
+          <div class="input-group">
+            <label for="stopComuna">Comuna / Lugar</label>
+            <input type="text" id="stopComuna" placeholder="Ej: San Bernardo / Quilicura" />
+          </div>
+          <div class="input-group">
+            <label for="stopDate">Fecha</label>
+            <input type="date" id="stopDate" />
+          </div>
+          <button class="btn-primary" onclick="guardarDatosStop()">Guardar Stop</button>
+        </div>
+      </section>
+
+      <!-- 5 Competencias -->
+      <div class="section-label">🏀 Selecciona la Competencia a Gestionar</div>
+      <section class="categories-grid">
+        <div class="cat-card" onclick="abrirCategoria('triples_infantil')">
+          <div>
+            <div class="cat-badge">Categoría Sub-14</div>
+            <div class="cat-title">Triples Infantil</div>
+            <div class="cat-rules">Hasta 14 años. <strong>1 minuto</strong> individual y los <strong>2 mejores</strong> pasan a la Gran Final.</div>
+            <div id="win-badge-triples_infantil" class="cat-winner-tag hidden"></div>
+          </div>
+          <div class="cat-footer">
+            <span id="count-triples_infantil">0 inscritos</span>
+            <span class="cat-enter">Entrar →</span>
+          </div>
+        </div>
+
+        <div class="cat-card" onclick="abrirCategoria('triples_tc')">
+          <div>
+            <div class="cat-badge">Categoría Abierta</div>
+            <div class="cat-title">Triples Todo Competidor</div>
+            <div class="cat-rules">Sin límite de edad. <strong>1 minuto</strong> individual y los <strong>2 mejores</strong> pasan a la Gran Final.</div>
+            <div id="win-badge-triples_tc" class="cat-winner-tag hidden"></div>
+          </div>
+          <div class="cat-footer">
+            <span id="count-triples_tc">0 inscritos</span>
+            <span class="cat-enter">Entrar →</span>
+          </div>
+        </div>
+
+        <div class="cat-card" onclick="abrirCategoria('1v1')">
+          <div>
+            <div class="cat-badge">Duelo Individual</div>
+            <div class="cat-title">1 VS 1</div>
+            <div class="cat-rules"><strong>3 minutos</strong> corridos o el primero que llegue a <strong>5 puntos</strong>. Si es impar, enfrenta al mejor de la ronda.</div>
+            <div id="win-badge-1v1" class="cat-winner-tag hidden"></div>
+          </div>
+          <div class="cat-footer">
+            <span id="count-1v1">0 inscritos</span>
+            <span class="cat-enter">Entrar →</span>
+          </div>
+        </div>
+
+        <div class="cat-card" onclick="abrirCategoria('3v3')">
+          <div>
+            <div class="cat-badge">Equipos Calle</div>
+            <div class="cat-title">3 VS 3</div>
+            <div class="cat-rules"><strong>3 minutos</strong> corridos o el primero que llegue a <strong>7 puntos</strong>. Si es impar, enfrenta al mejor de la ronda.</div>
+            <div id="win-badge-3v3" class="cat-winner-tag hidden"></div>
+          </div>
+          <div class="cat-footer">
+            <span id="count-3v3">0 equipos</span>
+            <span class="cat-enter">Entrar →</span>
+          </div>
+        </div>
+
+        <div class="cat-card" onclick="abrirCategoria('5v5')">
+          <div>
+            <div class="cat-badge">Cancha Completa</div>
+            <div class="cat-title">5 VS 5</div>
+            <div class="cat-rules"><strong>5 minutos</strong> corridos. Gana el equipo con mayor puntaje (1 pt y 2 pts).</div>
+            <div id="win-badge-5v5" class="cat-winner-tag hidden"></div>
+          </div>
+          <div class="cat-footer">
+            <span id="count-5v5">0 equipos</span>
+            <span class="cat-enter">Entrar →</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- MÓDULO ESPECIAL: EL CHOSEN DEL STOP -->
+      <div class="section-label" style="color:var(--gold-chosen);">⭐ Elección Oficial de la Comuna</div>
+      <section class="cat-card chosen-card" onclick="abrirVistaChosen()">
+        <div>
+          <div class="cat-badge" style="color:var(--gold-chosen);">Votación Interna de Reyes de la Kncha</div>
+          <div class="cat-title" style="color:var(--gold-chosen);">EL CHOSEN DEL STOP</div>
+          <div class="cat-rules">
+            Arma la lista interna de candidatos destacados de la fecha. <strong>Se proyectará automáticamente en la Pantalla TV solo cuando las 5 competencias tengan a su campeón electo.</strong>
+          </div>
+          <div id="win-badge-chosen" class="cat-winner-tag hidden" style="border-color:var(--gold-chosen); color:var(--gold-chosen); background:rgba(250,204,21,0.15);"></div>
+        </div>
+        <div class="cat-footer">
+          <span id="count-chosen">0 candidatos nominados • 0/5 campeones listos</span>
+          <span class="cat-enter" style="color:var(--gold-chosen);">Gestionar Lista →</span>
+        </div>
+      </section>
+
+      <!-- Base de Datos Nube -->
+      <section class="db-panel">
+        <div class="db-info">
+          <h3>☁️ Base de Datos en Tiempo Real (Firebase)</h3>
+          <p id="summaryText">Sincronizado en tiempo real con la Pantalla de Proyección TV.</p>
+        </div>
+        <div class="db-actions">
+          <button class="btn-secondary" onclick="exportarCSV()">📥 Descargar para Google Sheets (CSV)</button>
+          <button class="btn-danger" onclick="abrirModalLimpiarStop()">🗑️ Limpiar Stop</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================= VISTA 2: PANEL DE COMPETENCIA ================= -->
+    <div id="view-comp" class="hidden">
+      <div class="comp-topbar">
+        <div class="comp-title-box">
+          <h2 id="compTitle">CATEGORÍA</h2>
+          <p id="compSubtitle">Reglas de la categoría</p>
+        </div>
+        <div style="display:flex; gap:0.65rem; flex-wrap:wrap;">
+          <button class="btn-secondary" onclick="volverInicio()">← Volver al Stop</button>
+        </div>
+      </div>
+
+      <div id="championBanner" class="champion-banner hidden">
+        <div style="font-size:0.85rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:800;">👑 Campeón de la Categoría</div>
+        <h3 id="championName">NOMBRE GANADOR</h3>
+      </div>
+
+      <div class="comp-grid">
+        <!-- Columna Izquierda -->
+        <div>
+          <div class="panel-box">
+            <h3>
+              <span>📝 Inscripciones</span>
+              <span id="compCountBadge" style="color:var(--orange-main);">0</span>
+            </h3>
+            <div class="add-row">
+              <input type="text" id="newParticipantInput" placeholder="Nombre jugador o equipo..." onkeypress="if(event.key==='Enter') agregarInscrito()" />
+              <button class="btn-primary" onclick="agregarInscrito()">+</button>
+            </div>
+            <ul id="inscritosList" class="inscritos-list"></ul>
+          </div>
+
+          <div id="importFrom3v3Box" class="panel-box import-box hidden">
+            <h3>
+              <span>📥 Traer Equipos desde 3 vs 3</span>
+            </h3>
+            <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.8rem;">
+              Reutiliza los equipos ya creados en el <strong>3 vs 3</strong> sin volver a escribirlos:
+            </p>
+            <div class="add-row" style="margin-bottom:0.65rem;">
+              <select id="select3v3Team"></select>
+              <button class="btn-second-chance" onclick="importarUnEquipoDesde3v3()">+ Traer</button>
+            </div>
+            <button class="btn-secondary" style="width:100%;" onclick="importarTodosDesde3v3()">
+              ⚡ Traer Todos los Equipos del 3 vs 3
+            </button>
+          </div>
+
+          <div class="panel-box" id="actionBox"></div>
+        </div>
+
+        <!-- Columna Derecha -->
+        <div>
+          <!-- MODO DUELOS -->
+          <div id="duelsArea" class="hidden">
+            <div id="scoreboardBox" class="scoreboard-box hidden">
+              <div class="sb-header">
+                <span class="sb-round-badge" id="sbRoundLabel">RONDA 1</span>
+                <span id="sbRuleInfo" style="font-size:0.82rem; color:var(--text-muted); font-weight:700;">Meta: 5 pts | Tiempo: 3:00</span>
+              </div>
+
+              <div class="timer-display">
+                <div class="timer-digits" id="timerDigits">03:00</div>
+                <div class="timer-controls">
+                  <button class="btn-success" onclick="iniciarTimer()">▶ Iniciar</button>
+                  <button class="btn-secondary" onclick="pausarTimer()">⏸ Pausar</button>
+                  <button class="btn-danger" onclick="reiniciarTimer()">↺ Reiniciar</button>
+                </div>
+              </div>
+
+              <div class="versus-grid">
+                <div class="team-score-card">
+                  <div class="team-name" id="sbTeamA">EQUIPO A</div>
+                  <div class="team-pts" id="sbScoreA">0</div>
+                  <div class="pts-buttons">
+                    <button class="btn-pt btn-pt-1" onclick="sumarPuntos('A', 1)">+1</button>
+                    <button class="btn-pt btn-pt-2" onclick="sumarPuntos('A', 2)">+2</button>
+                    <button class="btn-pt btn-pt-minus" onclick="sumarPuntos('A', -1)">-1</button>
+                  </div>
+                </div>
+
+                <div class="vs-divider">VS</div>
+
+                <div class="team-score-card">
+                  <div class="team-name" id="sbTeamB">EQUIPO B</div>
+                  <div class="team-pts" id="sbScoreB">0</div>
+                  <div class="pts-buttons">
+                    <button class="btn-pt btn-pt-1" onclick="sumarPuntos('B', 1)">+1</button>
+                    <button class="btn-pt btn-pt-2" onclick="sumarPuntos('B', 2)">+2</button>
+                    <button class="btn-pt btn-pt-minus" onclick="sumarPuntos('B', -1)">-1</button>
+                  </div>
+                </div>
+              </div>
+
+              <div style="text-align:center; margin-top:1.4rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.1);">
+                <button class="btn-primary" onclick="finalizarPartidoActual()">✅ Confirmar Ganador y Cerrar Partido</button>
+              </div>
+            </div>
+
+            <div class="panel-box">
+              <h3>
+                <span id="roundTitle">⚔️ Cruces / Llaves</span>
+                <button id="btnNextRound" class="btn-success hidden" onclick="generarSiguienteRonda()">Armar Siguiente Ronda →</button>
+              </h3>
+              <div id="matchesContainer">
+                <p style="color:var(--text-muted); font-size:0.9rem;">Inscribe a los participantes a la izquierda y presiona <strong>"Sortear Primera Ronda"</strong>.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODO TRIPLES -->
+          <div id="triplesArea" class="hidden">
+            <div id="triplesCourtBox" class="scoreboard-box hidden">
+              <div class="sb-header">
+                <span class="sb-round-badge" id="tripleCourtStageBadge">🎯 CLASIFICATORIA EN CANCHA</span>
+                <div class="record-pill">🔥 Puntaje Máximo a Derrotar: <span id="tripleHighScore">0</span> pts (<span id="tripleHighScorer">-</span>)</div>
+              </div>
+
+              <div class="timer-display">
+                <div class="timer-digits" id="tripleTimerDigits">01:00</div>
+                <div class="timer-controls">
+                  <button class="btn-success" onclick="iniciarTimerTriple()">▶ Iniciar 1:00</button>
+                  <button class="btn-secondary" onclick="pausarTimer()">⏸ Pausar</button>
+                  <button class="btn-danger" onclick="reiniciarTimerTriple()">↺ Reiniciar 1:00</button>
+                  <button class="btn-second-chance" onclick="activarMuerteSubitaTriple()">⚡ Muerte Súbita (0:30)</button>
+                </div>
+              </div>
+
+              <div class="team-score-card" style="max-width:480px; margin:0 auto; border-color:var(--orange-main);">
+                <div style="font-size:0.78rem; text-transform:uppercase; color:var(--text-muted); letter-spacing:1px;">Compitiendo ahora (Individual)</div>
+                <div class="team-name" id="activeShooterName" style="font-size:1.95rem; color:#fff;">NOMBRE JUGADOR</div>
+                <div class="team-pts" id="activeShooterScore">0</div>
+                <div class="pts-buttons">
+                  <button class="btn-pt btn-pt-2" style="font-size:1.3rem; padding:0.8rem 1.5rem;" onclick="sumarTripleEnCancha(1)">+1 Triple</button>
+                  <button class="btn-pt btn-pt-minus" style="font-size:1.15rem; padding:0.8rem 1.2rem;" onclick="sumarTripleEnCancha(-1)">-1 Error</button>
+                </div>
+              </div>
+
+              <div style="text-align:center; margin-top:1.15rem;">
+                <button class="btn-secondary" onclick="cerrarTurnoTriple()">✅ Terminar Turno y Guardar Puntaje</button>
+              </div>
+            </div>
+
+            <div id="triplesQualySection" class="panel-box">
+              <h3>
+                <span>📋 Orden de Lanzadores (Clasificatoria)</span>
+                <button class="btn-primary" onclick="armarFinalTriples()">🔥 Armar Gran Final</button>
+              </h3>
+              <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:1rem;">
+                Llama a cada competidor con <strong>"🏀 A Cancha"</strong>. La llamita 🔥 marca como referencia los 2 mejores puntajes actuales sin mover el orden de la lista.
+              </p>
+              <table class="triples-table">
+                <thead>
+                  <tr>
+                    <th>Orden</th>
+                    <th>Lanzador</th>
+                    <th>Triples</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="triplesQualyBody"></tbody>
+              </table>
+            </div>
+
+            <div id="triplesFinalSection" class="hidden">
+              <div class="panel-box finalists-box">
+                <h3>
+                  <span>🏆 Finalistas — Llamado Individual a Cancha</span>
+                  <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                    <button class="btn-secondary" style="font-size:0.78rem; padding:0.45rem 0.8rem;" onclick="volverAClasificatoriaTriples()">← Volver a Clasificatoria</button>
+                    <button class="btn-success" style="font-size:0.85rem; padding:0.45rem 0.9rem;" onclick="coronarCampeonTriples()">👑 Coronar Campeón</button>
+                  </div>
+                </h3>
+                <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:1rem;">
+                  Llama de a uno a la cancha para su ronda final de 1 minuto. Si hay empate, desempata con <strong>Muerte Súbita</strong>.
+                </p>
+                <table class="triples-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Finalista</th>
+                      <th>Pts Qualy</th>
+                      <th>Pts Final</th>
+                      <th>Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody id="triplesFinalistsBody"></tbody>
+                </table>
+              </div>
+
+              <div class="panel-box">
+                <h3>
+                  <span>📋 Quedaron en el Camino — Second Chance</span>
+                </h3>
+                <p style="font-size:0.83rem; color:var(--text-muted); margin-bottom:0.9rem;">
+                  Ordenados por puntaje de clasificatoria. Si un finalista no está presente o hacen repechaje, presiona <strong>"⚡ Second Chance"</strong> para subirlo a la Gran Final.
+                </p>
+                <table class="triples-table">
+                  <thead>
+                    <tr>
+                      <th>Pos. Qualy</th>
+                      <th>Competidor</th>
+                      <th>Pts Qualy</th>
+                      <th>Rescate</th>
+                    </tr>
+                  </thead>
+                  <tbody id="triplesEliminatedBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= VISTA 3: GESTIÓN DE EL CHOSEN ================= -->
+    <div id="view-chosen" class="hidden">
+      <div class="comp-topbar">
+        <div class="comp-title-box">
+          <h2 style="color:var(--gold-chosen);">⭐ EL CHOSEN DEL STOP</h2>
+          <p id="chosenSubtitle">Lista interna de nominados por votación de Reyes de la Kncha</p>
+        </div>
+        <div style="display:flex; gap:0.65rem; flex-wrap:wrap;">
+          <button class="btn-secondary" onclick="volverInicio()">← Volver al Stop</button>
+        </div>
+      </div>
+
+      <div id="chosenElectedBanner" class="champion-banner hidden" style="border-color:var(--gold-chosen); background:linear-gradient(90deg, rgba(250,204,21,0.22), rgba(255,77,0,0.22));">
+        <div style="font-size:0.85rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:800; color:var(--gold-chosen);">⭐ Chosen Electo Oficial del Stop</div>
+        <h3 id="chosenElectedName" style="color:#fff;">NOMBRE CHOSEN</h3>
+      </div>
+
+      <div class="comp-grid">
+        <div>
+          <div class="panel-box" style="border-color:rgba(250,204,21,0.4);">
+            <h3>
+              <span>📝 Candidatos Nominados</span>
+              <span id="chosenCountBadge" style="color:var(--gold-chosen);">0</span>
+            </h3>
+            <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.85rem;">
+              Esta lista es interna. No se proyectará en la TV hasta que las 5 competencias tengan campeón.
+            </p>
+            <div class="add-row">
+              <input type="text" id="newChosenInput" placeholder="Nombre del jugador nominado..." onkeypress="if(event.key==='Enter') agregarCandidatoChosen()" />
+              <button class="btn-gold" onclick="agregarCandidatoChosen()">+</button>
+            </div>
+            <ul id="chosenCandidatesList" class="inscritos-list"></ul>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel-box">
+            <h3>
+              <span>📺 Estado de Proyección en Pantalla TV</span>
+              <span id="chosenReadyPill" class="status-pill">0/5 Campeones</span>
+            </h3>
+            <div id="chosenStatusMessage" style="font-size:0.92rem; color:var(--text-muted); line-height:1.5; margin-bottom:1.2rem;"></div>
+
+            <div id="chosenVotingArea">
+              <h4 style="font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:1.05rem; margin-bottom:0.75rem; color:var(--gold-chosen);">
+                🗳️ Seleccionar y Confirmar al Chosen Electo:
+              </h4>
+              <div id="chosenVotingList"></div>
+            </div>
+
+            <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.1); display:flex; gap:0.65rem; flex-wrap:wrap;">
+              <button class="btn-danger" onclick="limpiarChosenElecto()">↺ Limpiar Elección</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="mainFooter" class="hidden">
+    Aplicación desarrollada por <strong>Tiempo Fuera (@tiempofuera_cl)</strong> para <strong>Reyes de la Kncha</strong> • Streetball Chile
+  </footer>
+
+  <!-- ================= MODAL DE SEGURIDAD PARA LIMPIAR STOP ================= -->
+  <div id="clearStopModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <h3>⚠️ ¡ADVERTENCIA CRÍTICA!</h3>
+      <p style="font-size:0.95rem; color:#e2e8f0; line-height:1.45;">
+        Estás a punto de <strong>ELIMINAR TODOS LOS DATOS</strong> de este Stop (inscritos, puntajes, llaves, campeones y lista de El Chosen). Esta acción no se puede deshacer.
+      </p>
+
+      <div id="mathStepBox" class="math-challenge-box">
+        <div style="font-size:0.82rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">
+          Paso 1: Resuelve esta operación para continuar
+        </div>
+        <div class="math-question" id="mathQuestionText">12 + 7 = ?</div>
+        <input type="number" id="mathAnswerInput" placeholder="?" onkeypress="if(event.key==='Enter') verificarProblemaMatematico()" />
+        <div id="mathErrorMsg" style="color:#f87171; font-size:0.82rem; font-weight:700; margin-top:0.5rem;" class="hidden">
+          ❌ Resultado incorrecto. Intenta nuevamente.
+        </div>
+        <div style="margin-top:1rem; display:flex; justify-content:center; gap:0.75rem;">
+          <button class="btn-secondary" onclick="cerrarModalLimpiarStop()">Cancelar</button>
+          <button class="btn-primary" onclick="verificarProblemaMatematico()">Verificar Resultado</button>
+        </div>
+      </div>
+
+      <div id="finalConfirmStepBox" class="math-challenge-box hidden" style="border-color:#ef4444; background:rgba(220,38,38,0.12);">
+        <div style="font-size:0.95rem; font-weight:800; color:#fca5a5; margin-bottom:0.6rem;">
+          🚨 SEGUNDA ADVERTENCIA: ¿Confirmas que ya descargaste el archivo CSV y deseas borrar todo el Stop?
+        </div>
+        <div style="display:flex; justify-content:center; gap:0.75rem; flex-wrap:wrap; margin-top:1rem;">
+          <button class="btn-secondary" onclick="cerrarModalLimpiarStop()">No, Cancelar</button>
+          <button class="btn-danger-solid" onclick="ejecutarLimpiezaDefinitivaStop()">⚠️ Confirmar Borrado Definitivo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= VISTA PROYECCIÓN TV / PANTALLA GIGANTE ================= -->
+  <div id="view-tv" class="hidden">
+    <div class="tv-topbar">
+      <div class="tv-brand-left">
+        <img
+          src="logo-reyes.png"
+          alt="Reyes de la Kncha"
+          class="tv-logo-rk"
+          onerror="this.outerHTML='<div style=\'font-family:Anton,sans-serif;font-size:2.4rem;color:#ff4d00;\'>👑 REYES DE LA KNCHA</div>'"
+        />
+        <div class="tv-stop-info">
+          <div class="tv-stop-title" id="tvStopName">REYES DE LA KNCHA</div>
+          <div class="tv-stop-sub" id="tvStopComuna">STREETBALL CHILE</div>
+        </div>
+      </div>
+      <img
+        src="logo-tiempofuera.png"
+        alt="Tiempo Fuera"
+        class="tv-logo-tf"
+        onerror="this.outerHTML='<div style=\'font-family:Anton,sans-serif;font-style:italic;font-size:2.2rem;color:#fff;text-shadow:0 0 10px #fff;\'>TIEMPO FUERA</div>'"
+      />
+    </div>
+
+    <div class="tv-stage" id="tvStageContent"></div>
+
+    <div class="tv-footer">
+      <span>De la pantalla a la kncha • Presiona F11 para pantalla completa</span>
+      <span>Producción Oficial: Tiempo Fuera (@tiempofuera_cl)</span>
+    </div>
+  </div>
+
+  <!-- Firebase SDK (Compat v10 para ejecución directa sin compilador) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <script>
+    /* ================= CONFIGURACIÓN DE FIREBASE ================= */
+    const firebaseConfig = {
+      apiKey: "AIzaSyCHIowiYyUitWcoE90UiAjVTbJf42woSPw",
+      authDomain: "reyes-de-la-kncha.firebaseapp.com",
+      databaseURL: "https://reyes-de-la-kncha-default-rtdb.firebaseio.com",
+      projectId: "reyes-de-la-kncha",
+      storageBucket: "reyes-de-la-kncha.firebasestorage.app",
+      messagingSenderId: "390235200096",
+      appId: "1:390235200096:web:87bb51078a3735b9c44105",
+      measurementId: "G-6VHKH2P0SH"
+    };
+
+    const ALLOWED_EMAILS = ['hernan.araus@gmail.com'];
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    const STOP_REF = db.ref('stop_actual');
+    const LIVE_REF = db.ref('pantalla_tv');
+
+    const IS_TV_MODE = new URLSearchParams(window.location.search).get('tv') === '1';
+
+    const CAT_CONFIG = {
+      triples_infantil: {
+        titulo: 'Triples Infantil (Sub-14)',
+        corto: 'Triples Sub-14',
+        subtitulo: 'Hasta 14 años • 1 minuto individual y Gran Final',
+        tipo: 'triples'
+      },
+      triples_tc: {
+        titulo: 'Triples Todo Competidor',
+        corto: 'Triples TC',
+        subtitulo: 'Categoría abierta • 1 minuto individual y Gran Final',
+        tipo: 'triples'
+      },
+      '1v1': {
+        titulo: '1 VS 1 Streetball',
+        corto: '1 VS 1',
+        subtitulo: '3 minutos o 5 pts • Si es impar, enfrenta al mejor de la ronda',
+        tipo: 'duelo',
+        duracionSeg: 180,
+        metaPts: 5
+      },
+      '3v3': {
+        titulo: '3 VS 3 Calle',
+        corto: '3 VS 3',
+        subtitulo: '3 minutos o 7 pts • Si es impar, enfrenta al mejor de la ronda',
+        tipo: 'duelo',
+        duracionSeg: 180,
+        metaPts: 7
+      },
+      '5v5': {
+        titulo: '5 VS 5 Cancha Completa',
+        corto: '5 VS 5',
+        subtitulo: 'Tiempo corrido: 5 minutos • Gana el mayor puntaje (1 pt y 2 pts)',
+        tipo: 'duelo',
+        duracionSeg: 300,
+        metaPts: null
+      }
+    };
+
+    function crearEstructuraVacia() {
+      return {
+        stop: {
+          nombre: '',
+          comuna: '',
+          fecha: new Date().toISOString().split('T')[0]
+        },
+        categorias: {
+          triples_infantil: { inscritos: [], puntosQualy: {}, enFinal: false, finalistasList: [], puntosFinal: {}, ganador: '' },
+          triples_tc:       { inscritos: [], puntosQualy: {}, enFinal: false, finalistasList: [], puntosFinal: {}, ganador: '' },
+          '1v1':            { inscritos: [], rondaActual: 0, partidos: [], ganador: '' },
+          '3v3':            { inscritos: [], rondaActual: 0, partidos: [], ganador: '' },
+          '5v5':            { inscritos: [], rondaActual: 0, partidos: [], ganador: '' }
+        },
+        chosen: {
+          candidatos: [],
+          elegido: ''
+        }
+      };
+    }
+
+    let appData = crearEstructuraVacia();
+    let currentCat = null;
+    let isChosenViewOpen = false;
+    let activeMatchIndex = null;
+    let activeTripleShooter = null;
+    let timerInterval = null;
+    let secondsLeft = 180;
+    let tripleSecondsLeft = 60;
+    let isClockRunning = false;
+    let clockEndTimestamp = 0;
+    let mathExpectedAnswer = 0;
+    let tvLocalClockInterval = null;
+    let lastTvSnapshot = null;
+
+    function normalizarDatosDesdeNube(raw) {
+      const base = crearEstructuraVacia();
+      if (!raw) return base;
+      base.stop = { ...base.stop, ...(raw.stop || {}) };
+      base.chosen = {
+        candidatos: Array.isArray(raw.chosen?.candidatos) ? raw.chosen.candidatos : [],
+        elegido: raw.chosen?.elegido || ''
+      };
+      Object.keys(CAT_CONFIG).forEach(k => {
+        const c = raw.categorias?.[k] || {};
+        if (CAT_CONFIG[k].tipo === 'triples') {
+          base.categorias[k] = {
+            inscritos: Array.isArray(c.inscritos) ? c.inscritos : [],
+            puntosQualy: c.puntosQualy || {},
+            enFinal: Boolean(c.enFinal),
+            finalistasList: Array.isArray(c.finalistasList) ? c.finalistasList : [],
+            puntosFinal: c.puntosFinal || {},
+            ganador: c.ganador || ''
+          };
+        } else {
+          base.categorias[k] = {
+            inscritos: Array.isArray(c.inscritos) ? c.inscritos : [],
+            rondaActual: c.rondaActual || 0,
+            partidos: Array.isArray(c.partidos) ? c.partidos : [],
+            ganador: c.ganador || ''
+          };
+        }
+      });
+      return base;
+    }
+
+    /* ================= ARRANQUE SEGÚN MODO (TV VS CONTROL) ================= */
+    window.onload = () => {
+      if (IS_TV_MODE) {
+        iniciarModoTV();
+        return;
+      }
+
+      document.getElementById('authGate').classList.remove('hidden');
+
+      auth.onAuthStateChanged((user) => {
+        const loadingText = document.getElementById('authLoadingText');
+        const btnLogin = document.getElementById('btnGoogleLogin');
+        const errBox = document.getElementById('authErrorBox');
+
+        if (!user) {
+          loadingText.classList.add('hidden');
+          btnLogin.classList.remove('hidden');
+          document.getElementById('authGate').classList.remove('hidden');
+          document.getElementById('mainHeader').classList.add('hidden');
+          document.getElementById('mainControlContainer').classList.add('hidden');
+          document.getElementById('mainFooter').classList.add('hidden');
+          return;
+        }
+
+        const email = (user.email || '').toLowerCase();
+        if (!ALLOWED_EMAILS.includes(email)) {
+          loadingText.classList.add('hidden');
+          btnLogin.classList.remove('hidden');
+          errBox.textContent = `⛔ El correo ${email} no tiene permisos de operador. Usa una cuenta autorizada.`;
+          errBox.classList.remove('hidden');
+          auth.signOut();
+          return;
+        }
+
+        // Usuario autorizado: mostrar Mesa de Control y conectar a Realtime Database
+        errBox.classList.add('hidden');
+        document.getElementById('authGate').classList.add('hidden');
+        document.getElementById('mainHeader').classList.remove('hidden');
+        document.getElementById('mainControlContainer').classList.remove('hidden');
+        document.getElementById('mainFooter').classList.remove('hidden');
+
+        suscribirDatosControl();
+      });
+    };
+
+    function iniciarSesionGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider).catch((err) => {
+        const errBox = document.getElementById('authErrorBox');
+        errBox.textContent = `Error al iniciar sesión: ${err.message}`;
+        errBox.classList.remove('hidden');
+      });
+    }
+
+    function cerrarSesionGoogle() {
+      if (confirm('¿Deseas cerrar la sesión de operador?')) {
+        auth.signOut();
+      }
+    }
+
+    function suscribirDatosControl() {
+      STOP_REF.on('value', (snapshot) => {
+        appData = normalizarDatosDesdeNube(snapshot.val());
+        document.getElementById('stopName').value = appData.stop.nombre;
+        document.getElementById('stopComuna').value = appData.stop.comuna;
+        document.getElementById('stopDate').value = appData.stop.fecha;
+        actualizarContadoresHome();
+        if (currentCat) renderCategoria();
+        if (isChosenViewOpen) renderVistaChosen();
+      });
+    }
+
+    /* ================= SINCRONIZACIÓN EN TIEMPO REAL CON PANTALLA TV ================= */
+    function obtenerUrlProyector() {
+      return `${window.location.href.split('?')[0]}?tv=1`;
+    }
+
+    function abrirPantallaTV() {
+      emitirEstadoTV();
+      window.open(obtenerUrlProyector(), 'ReyesDeLaKnchaTV', 'width=1280,height=720,menubar=no,toolbar=no,location=no,status=no');
+    }
+
+    function copiarLinkProyector() {
+      const url = obtenerUrlProyector();
+      navigator.clipboard.writeText(url).then(() => {
+        alert(`✅ ¡Link de proyección copiado!\n\n${url}\n\nÁbrelo en cualquier Smart TV, proyector, notebook o celular para ver el marcador en vivo sin pedir clave.`);
+      }).catch(() => {
+        prompt('Copia este enlace para proyectar en cualquier dispositivo:', url);
+      });
+    }
+
+    function obtenerEstadoCampeones() {
+      const lista = Object.keys(CAT_CONFIG).map(key => ({
+        key,
+        corto: CAT_CONFIG[key].corto,
+        ganador: appData.categorias[key].ganador || ''
+      }));
+      const completadas = lista.filter(c => c.ganador !== '').length;
+      return {
+        lista,
+        completadas,
+        todasCompletas: completadas === 5
+      };
+    }
+
+    function construirSnapshotTV() {
+      const estadoChamps = obtenerEstadoCampeones();
+
+      const base = {
+        stopNombre: appData.stop.nombre || 'REYES DE LA KNCHA',
+        stopComuna: appData.stop.comuna || 'STREETBALL CHILE',
+        modo: 'idle',
+        categoriaTitulo: '',
+        subInfo: '',
+        relojSegundos: 0,
+        relojCorriendo: isClockRunning,
+        relojFinTimestamp: clockEndTimestamp,
+        teamA: '',
+        scoreA: 0,
+        teamB: '',
+        scoreB: 0,
+        shooterName: '',
+        shooterScore: 0,
+        recordPts: 0,
+        recordLeader: '-',
+        campeon: '',
+        campeonesStrip: estadoChamps.lista,
+        chosenCandidatos: appData.chosen.candidatos || [],
+        chosenElegido: appData.chosen.elegido || ''
+      };
+
+      if (!currentCat && estadoChamps.todasCompletas) {
+        if (appData.chosen.elegido) {
+          base.modo = 'chosen_elected';
+          return base;
+        }
+        if (appData.chosen.candidatos.length > 0) {
+          base.modo = 'chosen_voting';
+          return base;
+        }
+      }
+
+      if (!currentCat) return base;
+
+      const cfg = CAT_CONFIG[currentCat];
+      const catData = appData.categorias[currentCat];
+      base.categoriaTitulo = cfg.titulo;
+
+      if (catData.ganador && activeMatchIndex === null && !activeTripleShooter) {
+        base.modo = 'champion';
+        base.campeon = catData.ganador;
+        return base;
+      }
+
+      if (cfg.tipo === 'duelo' && activeMatchIndex !== null && catData.partidos[activeMatchIndex]) {
+        const p = catData.partidos[activeMatchIndex];
+        const totalRonda = catData.partidos.filter(x => x.ronda === p.ronda).length;
+        base.modo = 'duel';
+        base.subInfo = p.esRepechaje
+          ? `⚡ REPECHAJE RONDA ${p.ronda}`
+          : ((totalRonda === 1 && p.ronda > 1) ? '🏆 GRAN FINAL' : `⚔️ RONDA ${p.ronda}`);
+        base.relojSegundos = secondsLeft;
+        base.teamA = p.teamA;
+        base.scoreA = p.scoreA;
+        base.teamB = p.teamB;
+        base.scoreB = p.scoreB;
+        return base;
+      }
+
+      if (cfg.tipo === 'triples' && activeTripleShooter) {
+        const { nombre, fase } = activeTripleShooter;
+        const { maxPts, lider } = obtenerRecordTriples(fase);
+        base.modo = 'triple';
+        base.subInfo = fase === 'final' ? '🏆 GRAN FINAL DE TRIPLES' : '🎯 RONDA CLASIFICATORIA';
+        base.relojSegundos = tripleSecondsLeft;
+        base.shooterName = nombre;
+        base.shooterScore = fase === 'final' ? (catData.puntosFinal[nombre] || 0) : (catData.puntosQualy[nombre] || 0);
+        base.recordPts = maxPts;
+        base.recordLeader = lider;
+        return base;
+      }
+
+      base.modo = 'category_idle';
+      base.subInfo = cfg.subtitulo;
+      return base;
+    }
+
+    function emitirEstadoTV() {
+      if (IS_TV_MODE || !auth.currentUser) return;
+      const snap = construirSnapshotTV();
+      LIVE_REF.set(snap);
+    }
+
+    function iniciarModoTV() {
+      document.body.classList.add('tv-mode');
+      document.getElementById('view-tv').classList.remove('hidden');
+
+      LIVE_REF.on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          lastTvSnapshot = data;
+          renderPantallaTV(data);
+        }
+      });
+
+      // Actualización suave del reloj en la pantalla TV cada 250ms si está corriendo
+      tvLocalClockInterval = setInterval(() => {
+        if (!lastTvSnapshot || !lastTvSnapshot.relojCorriendo) return;
+        const clockEl = document.getElementById('tvLiveClock');
+        if (!clockEl) return;
+
+        const restante = Math.max(0, Math.ceil((lastTvSnapshot.relojFinTimestamp - Date.now()) / 1000));
+        clockEl.textContent = formatearMinSeg(restante);
+        clockEl.classList.toggle('danger', restante <= 15 && restante > 0);
+      }, 250);
+    }
+
+    function renderHtmlFranjaCampeones(lista) {
+      if (!lista || lista.length === 0) return '';
+      const cards = lista.map(item => {
+        if (item.ganador) {
+          return `
+            <div class="tv-champ-pill won">
+              <div class="tv-champ-cat">👑 ${item.corto}</div>
+              <div class="tv-champ-winner">${item.ganador}</div>
+            </div>
+          `;
+        }
+        return `
+          <div class="tv-champ-pill">
+            <div class="tv-champ-cat">${item.corto}</div>
+            <div class="tv-champ-pending">En disputa</div>
+          </div>
+        `;
+      }).join('');
+
+      return `<div class="tv-champs-strip">${cards}</div>`;
+    }
+
+    function renderPantallaTV(s) {
+      document.getElementById('tvStopName').textContent = s.stopNombre || 'REYES DE LA KNCHA';
+      document.getElementById('tvStopComuna').textContent = s.stopComuna || 'STREETBALL CHILE';
+
+      const stage = document.getElementById('tvStageContent');
+      let segMostrados = s.relojSegundos || 0;
+      if (s.relojCorriendo && s.relojFinTimestamp) {
+        segMostrados = Math.max(0, Math.ceil((s.relojFinTimestamp - Date.now()) / 1000));
+      }
+      const relojStr = formatearMinSeg(segMostrados);
+      const peligro = (segMostrados <= 15 && segMostrados > 0);
+
+      if (s.modo === 'duel') {
+        stage.innerHTML = `
+          <div class="tv-cat-pill">${s.categoriaTitulo} • ${s.subInfo}</div>
+          <div id="tvLiveClock" class="tv-clock ${peligro ? 'danger' : ''}">${relojStr}</div>
+          <div class="tv-duel-board">
+            <div class="tv-team-box">
+              <div class="tv-team-name">${s.teamA}</div>
+              <div class="tv-team-score">${s.scoreA}</div>
+            </div>
+            <div class="tv-vs">VS</div>
+            <div class="tv-team-box">
+              <div class="tv-team-name">${s.teamB}</div>
+              <div class="tv-team-score">${s.scoreB}</div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      if (s.modo === 'triple') {
+        stage.innerHTML = `
+          <div class="tv-cat-pill">${s.categoriaTitulo} • ${s.subInfo}</div>
+          <div id="tvLiveClock" class="tv-clock ${peligro ? 'danger' : ''}">${relojStr}</div>
+          <div class="tv-triple-card">
+            <div style="font-family:'Oswald',sans-serif; font-size:1.5rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:2px;">En Cancha</div>
+            <div class="tv-team-name" style="font-size:clamp(2.5rem, 5vw, 4.6rem); margin-top:0.5vh;">${s.shooterName}</div>
+            <div class="tv-team-score">${s.shooterScore}</div>
+          </div>
+          <div class="tv-triple-record">🔥 Récord a Superar: <strong>${s.recordPts} PTS</strong> (${s.recordLeader})</div>
+        `;
+        return;
+      }
+
+      if (s.modo === 'champion') {
+        stage.innerHTML = `
+          <div class="tv-cat-pill">${s.categoriaTitulo}</div>
+          <div class="tv-champ-box">
+            <div style="font-family:'Oswald',sans-serif; font-size:2rem; letter-spacing:3px; text-transform:uppercase; color:#fff;">👑 Campeón Oficial del Stop</div>
+            <div class="tv-champ-name">${s.campeon}</div>
+          </div>
+          ${renderHtmlFranjaCampeones(s.campeonesStrip)}
+        `;
+        return;
+      }
+
+      if (s.modo === 'chosen_voting') {
+        const candsHtml = (s.chosenCandidatos || []).map(c => `
+          <div class="tv-chosen-candidate">
+            <div style="font-family:'Oswald',sans-serif; font-size:0.95rem; color:var(--gold-chosen); letter-spacing:1.5px; text-transform:uppercase;">⭐ Nominado</div>
+            <div class="tv-chosen-candidate-name">${c}</div>
+          </div>
+        `).join('');
+
+        stage.innerHTML = `
+          <div class="tv-idle-tag" style="background:var(--gold-chosen);">Votación Oficial de Reyes de la Kncha</div>
+          <div class="tv-idle-title" style="font-size:clamp(2.8rem, 6vw, 5.2rem);">ELECCIÓN DE <span style="color:var(--gold-chosen);">EL CHOSEN</span></div>
+          <div class="tv-chosen-grid">${candsHtml}</div>
+          ${renderHtmlFranjaCampeones(s.campeonesStrip)}
+        `;
+        return;
+      }
+
+      if (s.modo === 'chosen_elected') {
+        stage.innerHTML = `
+          <div class="tv-cat-pill" style="border-color:var(--gold-chosen); color:var(--gold-chosen);">⭐ Reconocimiento Máximo de la Comuna</div>
+          <div class="tv-chosen-elected-box">
+            <div style="font-family:'Oswald',sans-serif; font-size:2.1rem; letter-spacing:3px; text-transform:uppercase; color:var(--gold-chosen);">⭐ EL CHOSEN ELECTO DEL STOP</div>
+            <div class="tv-champ-name" style="color:#fff; text-shadow:0 0 30px rgba(250,204,21,0.6);">${s.chosenElegido}</div>
+          </div>
+          ${renderHtmlFranjaCampeones(s.campeonesStrip)}
+        `;
+        return;
+      }
+
+      if (s.modo === 'category_idle') {
+        stage.innerHTML = `
+          <div class="tv-idle-tag">A Prepararse en Cancha</div>
+          <div class="tv-idle-title">${s.categoriaTitulo}<span>REYES DE LA KNCHA</span></div>
+          ${renderHtmlFranjaCampeones(s.campeonesStrip)}
+        `;
+        return;
+      }
+
+      stage.innerHTML = `
+        <div class="tv-idle-tag">Competencia Oficial Streetball</div>
+        <div class="tv-idle-title">BUSCANDO AL<span>REY DE LA KNCHA</span></div>
+        ${renderHtmlFranjaCampeones(s.campeonesStrip)}
+      `;
+    }
+
+    /* ================= PERSISTENCIA Y NAVEGACIÓN ================= */
+    function persistirDB() {
+      if (!auth.currentUser) return;
+      STOP_REF.set(appData);
+      actualizarContadoresHome();
+      emitirEstadoTV();
+    }
+
+    function guardarDatosStop() {
+      appData.stop.nombre = document.getElementById('stopName').value.trim();
+      appData.stop.comuna = document.getElementById('stopComuna').value.trim();
+      appData.stop.fecha = document.getElementById('stopDate').value;
+
+      if (!appData.stop.nombre || !appData.stop.comuna) {
+        alert('⚠️ Por favor ingresa el nombre del Stop y la Comuna.');
+        return;
+      }
+      persistirDB();
+      document.getElementById('dbStatus').textContent = `● Guardado en Nube: ${appData.stop.nombre} (${appData.stop.comuna})`;
+    }
+
+    function actualizarContadoresHome() {
+      Object.keys(CAT_CONFIG).forEach(key => {
+        const cat = appData.categorias[key];
+        const label = (key === '3v3' || key === '5v5') ? 'equipos' : 'inscritos';
+        document.getElementById(`count-${key}`).textContent = `${cat.inscritos.length} ${label}`;
+
+        const winBadge = document.getElementById(`win-badge-${key}`);
+        if (cat.ganador) {
+          winBadge.textContent = `👑 Campeón: ${cat.ganador}`;
+          winBadge.classList.remove('hidden');
+        } else {
+          winBadge.classList.add('hidden');
+        }
+      });
+
+      const estadoChamps = obtenerEstadoCampeones();
+      const candsCount = appData.chosen.candidatos.length;
+      document.getElementById('count-chosen').textContent =
+        `${candsCount} candidatos nominados • ${estadoChamps.completadas}/5 campeones listos`;
+
+      const chosenWinBadge = document.getElementById('win-badge-chosen');
+      if (appData.chosen.elegido) {
+        chosenWinBadge.textContent = `⭐ Chosen Electo: ${appData.chosen.elegido}`;
+        chosenWinBadge.classList.remove('hidden');
+      } else {
+        chosenWinBadge.classList.add('hidden');
+      }
+
+      if (appData.stop.nombre) {
+        document.getElementById('summaryText').textContent =
+          `Stop activo en la nube: "${appData.stop.nombre}" en ${appData.stop.comuna} (${appData.stop.fecha}).`;
+      }
+    }
+
+    function abrirCategoria(catKey) {
+      if (!appData.stop.nombre || !appData.stop.comuna) {
+        alert('Primero ingresa y guarda el Stop y la Comuna arriba 👆');
+        document.getElementById('stopName').focus();
+        return;
+      }
+
+      currentCat = catKey;
+      isChosenViewOpen = false;
+      activeMatchIndex = null;
+      activeTripleShooter = null;
+      pausarTimer();
+
+      const cfg = CAT_CONFIG[catKey];
+      document.getElementById('view-home').classList.add('hidden');
+      document.getElementById('view-chosen').classList.add('hidden');
+      document.getElementById('view-comp').classList.remove('hidden');
+
+      document.getElementById('compTitle').textContent = cfg.titulo;
+      document.getElementById('compSubtitle').textContent = `${appData.stop.nombre} (${appData.stop.comuna}) • ${cfg.subtitulo}`;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderCategoria();
+      emitirEstadoTV();
+    }
+
+    function volverInicio() {
+      pausarTimer();
+      currentCat = null;
+      isChosenViewOpen = false;
+      activeTripleShooter = null;
+      activeMatchIndex = null;
+      document.getElementById('view-comp').classList.add('hidden');
+      document.getElementById('view-chosen').classList.add('hidden');
+      document.getElementById('view-home').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      actualizarContadoresHome();
+      emitirEstadoTV();
+    }
+
+    function agregarInscrito() {
+      const input = document.getElementById('newParticipantInput');
+      const nombre = input.value.trim();
+      if (!nombre) return;
+
+      const catData = appData.categorias[currentCat];
+      if (catData.inscritos.some(i => i.toLowerCase() === nombre.toLowerCase())) {
+        alert('⚠️ Ese participante o equipo ya está inscrito.');
+        return;
+      }
+
+      catData.inscritos.push(nombre);
+      if (CAT_CONFIG[currentCat].tipo === 'triples') {
+        catData.puntosQualy[nombre] = 0;
+      }
+
+      input.value = '';
+      input.focus();
+      persistirDB();
+      renderCategoria();
+    }
+
+    function eliminarInscrito(index) {
+      const catData = appData.categorias[currentCat];
+      const nombre = catData.inscritos[index];
+      if (activeTripleShooter && activeTripleShooter.nombre === nombre) {
+        activeTripleShooter = null;
+        pausarTimer();
+      }
+      catData.inscritos.splice(index, 1);
+      if (catData.puntosQualy) delete catData.puntosQualy[nombre];
+      if (catData.finalistasList) {
+        catData.finalistasList = catData.finalistasList.filter(n => n !== nombre);
+      }
+      persistirDB();
+      renderCategoria();
+    }
+
+    /* ================= MÓDULO EL CHOSEN ================= */
+    function abrirVistaChosen() {
+      if (!appData.stop.nombre || !appData.stop.comuna) {
+        alert('Primero ingresa y guarda el Stop y la Comuna arriba 👆');
+        document.getElementById('stopName').focus();
+        return;
+      }
+
+      currentCat = null;
+      isChosenViewOpen = true;
+      pausarTimer();
+
+      document.getElementById('view-home').classList.add('hidden');
+      document.getElementById('view-comp').classList.add('hidden');
+      document.getElementById('view-chosen').classList.remove('hidden');
+
+      document.getElementById('chosenSubtitle').textContent =
+        `${appData.stop.nombre} (${appData.stop.comuna}) • Lista interna de votación`;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderVistaChosen();
+      emitirEstadoTV();
+    }
+
+    function agregarCandidatoChosen() {
+      const input = document.getElementById('newChosenInput');
+      const nombre = input.value.trim();
+      if (!nombre) return;
+
+      if (appData.chosen.candidatos.some(c => c.toLowerCase() === nombre.toLowerCase())) {
+        alert('⚠️ Ese jugador ya está en la lista de nominados.');
+        return;
+      }
+
+      appData.chosen.candidatos.push(nombre);
+      input.value = '';
+      input.focus();
+      persistirDB();
+      renderVistaChosen();
+    }
+
+    function eliminarCandidatoChosen(idx) {
+      const nombre = appData.chosen.candidatos[idx];
+      if (appData.chosen.elegido === nombre) {
+        appData.chosen.elegido = '';
+      }
+      appData.chosen.candidatos.splice(idx, 1);
+      persistirDB();
+      renderVistaChosen();
+    }
+
+    function confirmarChosenElecto(nombre) {
+      const estadoChamps = obtenerEstadoCampeones();
+      if (!estadoChamps.todasCompletas) {
+        if (!confirm(`Aún faltan campeones por definir (${estadoChamps.completadas}/5). ¿Deseas confirmar a ${nombre} como El Chosen de todas formas?`)) {
+          return;
+        }
+      }
+      appData.chosen.elegido = nombre;
+      persistirDB();
+      renderVistaChosen();
+      alert(`⭐ ¡${nombre.toUpperCase()} HA SIDO CONFIRMADO COMO EL CHOSEN DEL STOP!`);
+    }
+
+    function limpiarChosenElecto() {
+      appData.chosen.elegido = '';
+      persistirDB();
+      renderVistaChosen();
+    }
+
+    function renderVistaChosen() {
+      const estadoChamps = obtenerEstadoCampeones();
+      const banner = document.getElementById('chosenElectedBanner');
+      if (appData.chosen.elegido) {
+        document.getElementById('chosenElectedName').textContent = appData.chosen.elegido;
+        banner.classList.remove('hidden');
+      } else {
+        banner.classList.add('hidden');
+      }
+
+      document.getElementById('chosenCountBadge').textContent = appData.chosen.candidatos.length;
+      const ul = document.getElementById('chosenCandidatesList');
+      ul.innerHTML = '';
+      appData.chosen.candidatos.forEach((cand, idx) => {
+        const li = document.createElement('li');
+        li.className = 'inscrito-item';
+        li.innerHTML = `
+          <span>⭐ ${idx + 1}. ${cand}</span>
+          <button class="btn-del-mini" onclick="eliminarCandidatoChosen(${idx})" title="Quitar">✕</button>
+        `;
+        ul.appendChild(li);
+      });
+
+      const pill = document.getElementById('chosenReadyPill');
+      const msg = document.getElementById('chosenStatusMessage');
+
+      if (estadoChamps.todasCompletas) {
+        pill.textContent = '✅ 5/5 Campeones Listos • Proyectando en TV';
+        pill.style.background = 'rgba(250, 204, 21, 0.2)';
+        pill.style.color = '#facc15';
+        pill.style.borderColor = '#facc15';
+        msg.innerHTML = `🟢 <strong>¡Todas las competencias finalizaron!</strong> La Pantalla TV ya está proyectando a los candidatos de <strong>El Chosen</strong>. Selecciona al ganador por votación abajo para proyectarlo en grande.`;
+      } else {
+        pill.textContent = `⏳ ${estadoChamps.completadas}/5 Campeones Listos`;
+        pill.style.background = 'rgba(255, 255, 255, 0.08)';
+        pill.style.color = '#94a3b8';
+        pill.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+        msg.innerHTML = `🔒 <strong>Modo Lista Interna:</strong> Mientras no estén los 5 campeones definidos, esta lista permanece oculta en la Pantalla TV. Apenas salga el 5° campeón, aparecerá automáticamente en la proyección.`;
+      }
+
+      const votingList = document.getElementById('chosenVotingList');
+      votingList.innerHTML = '';
+
+      if (appData.chosen.candidatos.length === 0) {
+        votingList.innerHTML = `<p style="color:var(--text-muted); font-size:0.88rem;">Agrega candidatos en el panel de la izquierda para habilitar la votación.</p>`;
+        return;
+      }
+
+      appData.chosen.candidatos.forEach(cand => {
+        const esElecto = appData.chosen.elegido === cand;
+        const row = document.createElement('div');
+        row.className = `match-card ${esElecto ? 'active-match' : ''}`;
+        row.innerHTML = `
+          <div style="font-weight:800; font-size:1.05rem;">⭐ ${cand}</div>
+          <button
+            class="${esElecto ? 'btn-success' : 'btn-gold'}"
+            style="padding:0.45rem 0.95rem; font-size:0.85rem;"
+            onclick="confirmarChosenElecto('${cand.replace(/'/g, "\\'")}')"
+          >
+            ${esElecto ? '👑 Chosen Electo' : '👑 Confirmar Chosen'}
+          </button>
+        `;
+        votingList.appendChild(row);
+      });
+    }
+
+    /* ================= IMPORTAR EQUIPOS DESDE 3v3 AL 5v5 ================= */
+    function actualizarSelectorImportacion3v3() {
+      const box = document.getElementById('importFrom3v3Box');
+      if (currentCat !== '5v5') {
+        box.classList.add('hidden');
+        return;
+      }
+
+      box.classList.remove('hidden');
+      const select = document.getElementById('select3v3Team');
+      const equipos3v3 = appData.categorias['3v3'].inscritos || [];
+      const equipos5v5 = appData.categorias['5v5'].inscritos || [];
+
+      const disponibles = equipos3v3.filter(
+        eq => !equipos5v5.some(e5 => e5.toLowerCase() === eq.toLowerCase())
+      );
+
+      select.innerHTML = '';
+      if (equipos3v3.length === 0) {
+        select.innerHTML = `<option value="">(Aún no hay equipos en 3 vs 3)</option>`;
+      } else if (disponibles.length === 0) {
+        select.innerHTML = `<option value="">(Todos los del 3x3 ya están en 5x5)</option>`;
+      } else {
+        disponibles.forEach(eq => {
+          const opt = document.createElement('option');
+          opt.value = eq;
+          opt.textContent = eq;
+          select.appendChild(opt);
+        });
+      }
+    }
+
+    function importarUnEquipoDesde3v3() {
+      if (currentCat !== '5v5') return;
+      const select = document.getElementById('select3v3Team');
+      const equipo = select.value;
+      if (!equipo) return;
+
+      const cat5v5 = appData.categorias['5v5'];
+      if (!cat5v5.inscritos.some(e => e.toLowerCase() === equipo.toLowerCase())) {
+        cat5v5.inscritos.push(equipo);
+        persistirDB();
+        renderCategoria();
+      }
+    }
+
+    function importarTodosDesde3v3() {
+      if (currentCat !== '5v5') return;
+      const equipos3v3 = appData.categorias['3v3'].inscritos || [];
+      if (equipos3v3.length === 0) {
+        alert('⚠️ Todavía no hay equipos inscritos en la categoría 3 vs 3.');
+        return;
+      }
+
+      const cat5v5 = appData.categorias['5v5'];
+      let agregados = 0;
+
+      equipos3v3.forEach(eq => {
+        if (!cat5v5.inscritos.some(e5 => e5.toLowerCase() === eq.toLowerCase())) {
+          cat5v5.inscritos.push(eq);
+          agregados++;
+        }
+      });
+
+      if (agregados === 0) {
+        alert('Todos los equipos del 3 vs 3 ya estaban agregados en el 5 vs 5.');
+        return;
+      }
+
+      persistirDB();
+      renderCategoria();
+    }
+
+    function renderCategoria() {
+      const cfg = CAT_CONFIG[currentCat];
+      const catData = appData.categorias[currentCat];
+
+      const champBanner = document.getElementById('championBanner');
+      if (catData.ganador) {
+        document.getElementById('championName').textContent = catData.ganador;
+        champBanner.classList.remove('hidden');
+      } else {
+        champBanner.classList.add('hidden');
+      }
+
+      document.getElementById('compCountBadge').textContent = catData.inscritos.length;
+      const ul = document.getElementById('inscritosList');
+      ul.innerHTML = '';
+      catData.inscritos.forEach((nombre, idx) => {
+        const li = document.createElement('li');
+        li.className = 'inscrito-item';
+        li.innerHTML = `
+          <span>${idx + 1}. ${nombre}</span>
+          <button class="btn-del-mini" onclick="eliminarInscrito(${idx})" title="Eliminar">✕</button>
+        `;
+        ul.appendChild(li);
+      });
+
+      actualizarSelectorImportacion3v3();
+
+      const actionBox = document.getElementById('actionBox');
+
+      if (cfg.tipo === 'duelo') {
+        document.getElementById('duelsArea').classList.remove('hidden');
+        document.getElementById('triplesArea').classList.add('hidden');
+
+        actionBox.innerHTML = `
+          <h3>⚡ Control de Llaves</h3>
+          <button class="btn-primary" style="width:100%; margin-bottom:0.6rem;" onclick="iniciarTorneoDuelos()">
+            🎲 Sortear Primera Ronda
+          </button>
+          <button class="btn-danger" style="width:100%;" onclick="reiniciarTorneoCategoria()">
+            ↺ Reiniciar Llaves de Categoría
+          </button>
+        `;
+
+        renderPartidosDuelos();
+      } else {
+        document.getElementById('duelsArea').classList.add('hidden');
+        document.getElementById('triplesArea').classList.remove('hidden');
+
+        actionBox.innerHTML = `
+          <h3>🎯 Control de Triples</h3>
+          <button class="btn-danger" style="width:100%;" onclick="reiniciarTorneoCategoria()">
+            ↺ Reiniciar Puntajes Triples
+          </button>
+        `;
+
+        renderTriples();
+      }
+    }
+
+    /* ================= LÓGICA DE DUELOS ================= */
+    function mezclarArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function iniciarTorneoDuelos() {
+      const catData = appData.categorias[currentCat];
+      if (catData.inscritos.length < 2) {
+        alert('⚠️ Necesitas al menos 2 inscritos para armar los cruces.');
+        return;
+      }
+
+      if (catData.partidos.length > 0 && !confirm('Ya hay cruces creados. ¿Deseas volver a sortear desde la Ronda 1?')) {
+        return;
+      }
+
+      catData.rondaActual = 1;
+      catData.ganador = '';
+      catData.partidos = crearCrucesRonda(mezclarArray(catData.inscritos), 1);
+      activeMatchIndex = null;
+      document.getElementById('scoreboardBox').classList.add('hidden');
+
+      persistirDB();
+      renderPartidosDuelos();
+    }
+
+    function crearCrucesRonda(participantes, numRonda) {
+      const partidos = [];
+      for (let i = 0; i < participantes.length; i += 2) {
+        const teamA = participantes[i];
+        const teamB = participantes[i + 1] || null;
+
+        if (!teamB) {
+          partidos.push({
+            ronda: numRonda,
+            teamA: teamA,
+            teamB: '⏳ MEJOR DE LA RONDA',
+            scoreA: 0,
+            scoreB: 0,
+            ganador: null,
+            finalizado: false,
+            esRepechaje: true
+          });
+        } else {
+          partidos.push({
+            ronda: numRonda,
+            teamA: teamA,
+            teamB: teamB,
+            scoreA: 0,
+            scoreB: 0,
+            ganador: null,
+            finalizado: false,
+            esRepechaje: false
+          });
+        }
+      }
+      return partidos;
+    }
+
+    function evaluarAsignacionRepechaje(numRonda) {
+      const catData = appData.categorias[currentCat];
+      const partidosRonda = catData.partidos.filter(p => p.ronda === numRonda);
+      const repechaje = partidosRonda.find(p => p.esRepechaje && !p.finalizado);
+      if (!repechaje) return;
+
+      const regulares = partidosRonda.filter(p => !p.esRepechaje);
+      if (regulares.length === 0) return;
+
+      const regularesTerminados = regulares.every(p => p.finalizado);
+      if (!regularesTerminados) return;
+
+      let mejorGanador = null;
+      let mejorScore = -1;
+      let mejorDiff = -999;
+
+      regulares.forEach(p => {
+        const winnerScore = Math.max(p.scoreA, p.scoreB);
+        const loserScore = Math.min(p.scoreA, p.scoreB);
+        const diff = winnerScore - loserScore;
+
+        if (winnerScore > mejorScore || (winnerScore === mejorScore && diff > mejorDiff)) {
+          mejorScore = winnerScore;
+          mejorDiff = diff;
+          mejorGanador = p.ganador;
+        }
+      });
+
+      if (mejorGanador && repechaje.teamB !== mejorGanador) {
+        repechaje.teamB = mejorGanador;
+        alert(`⚡ ¡CRUCE DE ESPERA LISTO!\n\n${repechaje.teamA} (impar) enfrentará a ${mejorGanador} (Mejor de la Ronda) para definir su pase a la siguiente etapa.`);
+      }
+    }
+
+    function renderPartidosDuelos() {
+      const catData = appData.categorias[currentCat];
+      const container = document.getElementById('matchesContainer');
+      const btnNext = document.getElementById('btnNextRound');
+
+      if (!catData.partidos || catData.partidos.length === 0) {
+        container.innerHTML = `<p style="color:var(--text-muted); font-size:0.9rem;">Inscribe a los participantes a la izquierda y presiona <strong>"Sortear Primera Ronda"</strong>.</p>`;
+        btnNext.classList.add('hidden');
+        return;
+      }
+
+      const partidosRonda = catData.partidos.filter(p => p.ronda === catData.rondaActual);
+      const todosTerminados = partidosRonda.every(p => p.finalizado);
+
+      const nombreRonda = partidosRonda.length === 1 && catData.rondaActual > 1
+        ? '🏆 GRAN FINAL'
+        : `⚔️ RONDA ${catData.rondaActual}`;
+
+      document.getElementById('roundTitle').textContent = nombreRonda;
+
+      if (todosTerminados && !catData.ganador) {
+        btnNext.classList.remove('hidden');
+        btnNext.textContent = partidosRonda.length === 2 ? 'Armar Gran Final →' : 'Armar Siguiente Ronda →';
+      } else {
+        btnNext.classList.add('hidden');
+      }
+
+      container.innerHTML = '';
+      catData.partidos.forEach((p, idx) => {
+        if (p.ronda !== catData.rondaActual) return;
+
+        const div = document.createElement('div');
+        div.className = `match-card ${p.finalizado ? 'done-match' : ''} ${p.esRepechaje ? 'repechaje-match' : ''} ${idx === activeMatchIndex ? 'active-match' : ''}`;
+
+        let estadoHtml = '';
+        if (p.finalizado) {
+          estadoHtml = `<span style="color:#4ade80; font-weight:800;">Ganador: ${p.ganador} (${p.scoreA}-${p.scoreB})</span>`;
+        } else if (p.esRepechaje && p.teamB.startsWith('⏳')) {
+          estadoHtml = `<span style="color:#facc15; font-size:0.82rem; font-weight:700;">Esperando cierre de cruces...</span>`;
+        } else {
+          estadoHtml = `<button class="btn-primary" style="padding:0.45rem 0.9rem; font-size:0.85rem;" onclick="abrirMarcadorPartido(${idx})">🏀 Jugar / Marcador</button>`;
+        }
+
+        const badgeRepechaje = p.esRepechaje
+          ? `<div style="font-size:0.72rem; color:#facc15; text-transform:uppercase; font-weight:800; margin-bottom:0.2rem;">⚡ Duelo Impar vs Mejor de la Ronda</div>`
+          : '';
+
+        div.innerHTML = `
+          <div>
+            ${badgeRepechaje}
+            <div style="font-weight:700; font-size:1rem;">
+              ${p.teamA} <span style="color:var(--orange-main); margin:0 0.4rem;">VS</span> ${p.teamB}
+            </div>
+          </div>
+          <div>${estadoHtml}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function abrirMarcadorPartido(index) {
+      const partido = appData.categorias[currentCat].partidos[index];
+      if (partido.esRepechaje && partido.teamB.startsWith('⏳')) {
+        alert('⏳ Primero debes terminar los demás partidos de esta ronda para conocer al Mejor de la Ronda que enfrentará a ' + partido.teamA + '.');
+        return;
+      }
+
+      activeMatchIndex = index;
+      const cfg = CAT_CONFIG[currentCat];
+
+      pausarTimer();
+      secondsLeft = cfg.duracionSeg;
+      actualizarDisplayTimer();
+
+      const nombreRonda = appData.categorias[currentCat].partidos.filter(p => p.ronda === partido.ronda).length === 1 && partido.ronda > 1
+        ? 'GRAN FINAL'
+        : (partido.esRepechaje ? `REPECHAJE RONDA ${partido.ronda}` : `RONDA ${partido.ronda}`);
+
+      document.getElementById('sbRoundLabel').textContent = nombreRonda;
+      document.getElementById('sbRuleInfo').textContent = cfg.metaPts
+        ? `Meta: ${cfg.metaPts} pts | Tiempo: ${cfg.duracionSeg / 60}:00`
+        : `Mayor puntaje al terminar ${cfg.duracionSeg / 60}:00`;
+
+      document.getElementById('sbTeamA').textContent = partido.teamA;
+      document.getElementById('sbTeamB').textContent = partido.teamB;
+      document.getElementById('sbScoreA').textContent = partido.scoreA;
+      document.getElementById('sbScoreB').textContent = partido.scoreB;
+
+      document.getElementById('scoreboardBox').classList.remove('hidden');
+      renderPartidosDuelos();
+      emitirEstadoTV();
+    }
+
+    function sumarPuntos(lado, delta) {
+      if (activeMatchIndex === null) return;
+      const cfg = CAT_CONFIG[currentCat];
+      const partido = appData.categorias[currentCat].partidos[activeMatchIndex];
+
+      if (lado === 'A') {
+        partido.scoreA = Math.max(0, partido.scoreA + delta);
+        document.getElementById('sbScoreA').textContent = partido.scoreA;
+      } else {
+        partido.scoreB = Math.max(0, partido.scoreB + delta);
+        document.getElementById('sbScoreB').textContent = partido.scoreB;
+      }
+
+      persistirDB();
+
+      if (cfg.metaPts) {
+        if (partido.scoreA >= cfg.metaPts || partido.scoreB >= cfg.metaPts) {
+          pausarTimer();
+          const lider = partido.scoreA >= cfg.metaPts ? partido.teamA : partido.teamB;
+          setTimeout(() => {
+            if (confirm(`🔥 ¡${lider} alcanzó los ${cfg.metaPts} puntos! ¿Confirmar victoria y cerrar partido?`)) {
+              finalizarPartidoActual();
+            }
+          }, 150);
+        }
+      }
+    }
+
+    function finalizarPartidoActual() {
+      if (activeMatchIndex === null) return;
+      const catData = appData.categorias[currentCat];
+      const partido = catData.partidos[activeMatchIndex];
+
+      if (partido.scoreA === partido.scoreB) {
+        alert('⚠️ En Streetball no existe el empate. Jueguen Muerte Súbita (el siguiente punto gana) o tiro libre de desempate.');
+        return;
+      }
+
+      pausarTimer();
+      partido.finalizado = true;
+      partido.ganador = partido.scoreA > partido.scoreB ? partido.teamA : partido.teamB;
+
+      evaluarAsignacionRepechaje(partido.ronda);
+
+      const partidosEstaRonda = catData.partidos.filter(p => p.ronda === partido.ronda);
+      if (partidosEstaRonda.length === 1) {
+        catData.ganador = partido.ganador;
+        alert(`👑 ¡TENEMOS CAMPEÓN DE ${CAT_CONFIG[currentCat].titulo.toUpperCase()}: ${catData.ganador}!`);
+      }
+
+      activeMatchIndex = null;
+      document.getElementById('scoreboardBox').classList.add('hidden');
+      persistirDB();
+      renderCategoria();
+    }
+
+    function generarSiguienteRonda() {
+      const catData = appData.categorias[currentCat];
+      const partidosActuales = catData.partidos.filter(p => p.ronda === catData.rondaActual);
+
+      const ganadoresUnicos = [];
+      partidosActuales.forEach(p => {
+        const repechaje = partidosActuales.find(x => x.esRepechaje);
+        if (repechaje && !p.esRepechaje && p.ganador === repechaje.teamB) {
+          return;
+        }
+        if (p.ganador && !ganadoresUnicos.includes(p.ganador)) {
+          ganadoresUnicos.push(p.ganador);
+        }
+      });
+
+      if (ganadoresUnicos.length < 2) {
+        if (ganadoresUnicos.length === 1) {
+          catData.ganador = ganadoresUnicos[0];
+          persistirDB();
+          renderCategoria();
+        }
+        return;
+      }
+
+      catData.rondaActual += 1;
+      const nuevosCruces = crearCrucesRonda(ganadoresUnicos, catData.rondaActual);
+      catData.partidos.push(...nuevosCruces);
+
+      persistirDB();
+      renderPartidosDuelos();
+    }
+
+    /* ================= CRONÓMETROS GENERALES ================= */
+    function formatearMinSeg(seg) {
+      const min = Math.floor(seg / 60);
+      const s = seg % 60;
+      return `${String(min).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function actualizarDisplayTimer() {
+      const el = document.getElementById('timerDigits');
+      el.textContent = formatearMinSeg(secondsLeft);
+      el.classList.toggle('danger', secondsLeft <= 15 && secondsLeft > 0);
+      emitirEstadoTV();
+    }
+
+    function iniciarTimer() {
+      if (timerInterval) return;
+      isClockRunning = true;
+      clockEndTimestamp = Date.now() + (secondsLeft * 1000);
+      emitirEstadoTV();
+
+      timerInterval = setInterval(() => {
+        const restante = Math.max(0, Math.ceil((clockEndTimestamp - Date.now()) / 1000));
+        secondsLeft = restante;
+        const el = document.getElementById('timerDigits');
+        el.textContent = formatearMinSeg(secondsLeft);
+        el.classList.toggle('danger', secondsLeft <= 15 && secondsLeft > 0);
+
+        if (secondsLeft <= 0) {
+          pausarTimer();
+          sonarChicharra();
+          alert('⏰ ¡TIEMPO CUMPLIDO! Verifica el marcador para cerrar el partido.');
+        }
+      }, 250);
+    }
+
+    function pausarTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      isClockRunning = false;
+      clockEndTimestamp = 0;
+      emitirEstadoTV();
+    }
+
+    function reiniciarTimer() {
+      pausarTimer();
+      secondsLeft = CAT_CONFIG[currentCat].duracionSeg;
+      actualizarDisplayTimer();
+    }
+
+    function sonarChicharra() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, ctx.currentTime);
+        osc.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.8);
+      } catch (e) {}
+    }
+
+    /* ================= LÓGICA DE TRIPLES ================= */
+    function obtenerRecordTriples(fase) {
+      const catData = appData.categorias[currentCat];
+      let maxPts = 0;
+      let lider = '-';
+
+      if (fase === 'final') {
+        catData.finalistasList.forEach(nombre => {
+          const pts = catData.puntosFinal[nombre] || 0;
+          if (pts > maxPts) {
+            maxPts = pts;
+            lider = nombre;
+          }
+        });
+      } else {
+        catData.inscritos.forEach(nombre => {
+          const pts = catData.puntosQualy[nombre] || 0;
+          if (pts > maxPts) {
+            maxPts = pts;
+            lider = nombre;
+          }
+        });
+      }
+
+      return { maxPts, lider };
+    }
+
+    function obtenerTop2NombresQualy() {
+      const catData = appData.categorias[currentCat];
+      if (catData.inscritos.length < 2) return [];
+      const ordenados = [...catData.inscritos].sort((a, b) => {
+        return (catData.puntosQualy[b] || 0) - (catData.puntosQualy[a] || 0);
+      });
+      return ordenados.slice(0, 2).filter(n => (catData.puntosQualy[n] || 0) > 0);
+    }
+
+    function seleccionarLanzadorCancha(nombre, fase) {
+      pausarTimer();
+      activeTripleShooter = { nombre, fase };
+      tripleSecondsLeft = 60;
+      actualizarDisplayTimerTriple();
+      renderTriples();
+      emitirEstadoTV();
+      document.getElementById('triplesCourtBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function cerrarTurnoTriple() {
+      pausarTimer();
+      activeTripleShooter = null;
+      persistirDB();
+      renderTriples();
+    }
+
+    function sumarTripleEnCancha(delta) {
+      if (!activeTripleShooter) return;
+      const catData = appData.categorias[currentCat];
+      const { nombre, fase } = activeTripleShooter;
+
+      if (fase === 'final') {
+        catData.puntosFinal[nombre] = Math.max(0, (catData.puntosFinal[nombre] || 0) + delta);
+      } else {
+        catData.puntosQualy[nombre] = Math.max(0, (catData.puntosQualy[nombre] || 0) + delta);
+      }
+
+      persistirDB();
+      renderTriples();
+    }
+
+    function actualizarDisplayTimerTriple() {
+      const el = document.getElementById('tripleTimerDigits');
+      el.textContent = formatearMinSeg(tripleSecondsLeft);
+      el.classList.toggle('danger', tripleSecondsLeft <= 10 && tripleSecondsLeft > 0);
+      emitirEstadoTV();
+    }
+
+    function iniciarTimerTriple() {
+      if (timerInterval) return;
+      isClockRunning = true;
+      clockEndTimestamp = Date.now() + (tripleSecondsLeft * 1000);
+      emitirEstadoTV();
+
+      timerInterval = setInterval(() => {
+        const restante = Math.max(0, Math.ceil((clockEndTimestamp - Date.now()) / 1000));
+        tripleSecondsLeft = restante;
+        const el = document.getElementById('tripleTimerDigits');
+        el.textContent = formatearMinSeg(tripleSecondsLeft);
+        el.classList.toggle('danger', tripleSecondsLeft <= 10 && tripleSecondsLeft > 0);
+
+        if (tripleSecondsLeft <= 0) {
+          pausarTimer();
+          sonarChicharra();
+          alert(`⏰ ¡TIEMPO CUMPLIDO PARA ${activeTripleShooter.nombre.toUpperCase()}! Puntaje guardado automáticamente.`);
+        }
+      }, 250);
+    }
+
+    function reiniciarTimerTriple() {
+      pausarTimer();
+      tripleSecondsLeft = 60;
+      actualizarDisplayTimerTriple();
+    }
+
+    function activarMuerteSubitaTriple() {
+      pausarTimer();
+      tripleSecondsLeft = 30;
+      actualizarDisplayTimerTriple();
+    }
+
+    function renderTriples() {
+      const catData = appData.categorias[currentCat];
+
+      const courtBox = document.getElementById('triplesCourtBox');
+      if (activeTripleShooter && catData.inscritos.includes(activeTripleShooter.nombre)) {
+        courtBox.classList.remove('hidden');
+        const { nombre, fase } = activeTripleShooter;
+        const { maxPts, lider } = obtenerRecordTriples(fase);
+
+        document.getElementById('tripleCourtStageBadge').textContent =
+          fase === 'final' ? '🏆 GRAN FINAL EN CANCHA' : '🎯 CLASIFICATORIA EN CANCHA';
+
+        document.getElementById('tripleHighScore').textContent = maxPts;
+        document.getElementById('tripleHighScorer').textContent = lider;
+        document.getElementById('activeShooterName').textContent = nombre;
+        document.getElementById('activeShooterScore').textContent =
+          fase === 'final' ? (catData.puntosFinal[nombre] || 0) : (catData.puntosQualy[nombre] || 0);
+      } else {
+        courtBox.classList.add('hidden');
+      }
+
+      const qualySec = document.getElementById('triplesQualySection');
+      const finalSec = document.getElementById('triplesFinalSection');
+
+      if (!catData.enFinal) {
+        qualySec.classList.remove('hidden');
+        finalSec.classList.add('hidden');
+
+        const tbody = document.getElementById('triplesQualyBody');
+        tbody.innerHTML = '';
+        const top2 = obtenerTop2NombresQualy();
+
+        catData.inscritos.forEach((nombre, idx) => {
+          const pts = catData.puntosQualy[nombre] || 0;
+          const esActivo = activeTripleShooter && activeTripleShooter.nombre === nombre && activeTripleShooter.fase === 'qualy';
+          const tieneLlamita = top2.includes(nombre);
+
+          const tr = document.createElement('tr');
+          if (esActivo) tr.className = 'row-shooter-active';
+
+          tr.innerHTML = `
+            <td><strong>#${idx + 1}</strong></td>
+            <td style="font-weight:700;">${nombre} ${tieneLlamita ? '🔥' : ''}</td>
+            <td style="font-family:'Anton',sans-serif; font-size:1.65rem; color:var(--orange-main);">${pts}</td>
+            <td>
+              <button
+                class="${esActivo ? 'btn-success' : 'btn-primary'}"
+                style="padding:0.45rem 0.85rem; font-size:0.85rem;"
+                onclick="seleccionarLanzadorCancha('${nombre.replace(/'/g, "\\'")}', 'qualy')"
+              >
+                ${esActivo ? '🎯 En Cancha' : '🏀 A Cancha'}
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } else {
+        qualySec.classList.add('hidden');
+        finalSec.classList.remove('hidden');
+
+        const finBody = document.getElementById('triplesFinalistsBody');
+        finBody.innerHTML = '';
+
+        catData.finalistasList.forEach((nombre, idx) => {
+          const ptsQ = catData.puntosQualy[nombre] || 0;
+          const ptsF = catData.puntosFinal[nombre] || 0;
+          const esActivo = activeTripleShooter && activeTripleShooter.nombre === nombre && activeTripleShooter.fase === 'final';
+
+          const tr = document.createElement('tr');
+          if (esActivo) tr.className = 'row-shooter-active';
+
+          tr.innerHTML = `
+            <td><strong>#${idx + 1}</strong></td>
+            <td style="font-weight:700;">🔥 ${nombre}</td>
+            <td style="color:var(--text-muted); font-weight:700;">${ptsQ} pts</td>
+            <td style="font-family:'Anton',sans-serif; font-size:1.75rem; color:var(--orange-main);">${ptsF}</td>
+            <td style="display:flex; gap:0.4rem; align-items:center; flex-wrap:wrap;">
+              <button
+                class="${esActivo ? 'btn-success' : 'btn-primary'}"
+                style="padding:0.45rem 0.85rem; font-size:0.85rem;"
+                onclick="seleccionarLanzadorCancha('${nombre.replace(/'/g, "\\'")}', 'final')"
+              >
+                ${esActivo ? '🎯 En Cancha' : '🏀 A Cancha'}
+              </button>
+              <button
+                class="btn-del-mini"
+                title="Quitar de la final (ausente)"
+                onclick="quitarDeFinalTriple('${nombre.replace(/'/g, "\\'")}')"
+              >✕</button>
+            </td>
+          `;
+          finBody.appendChild(tr);
+        });
+
+        const elimBody = document.getElementById('triplesEliminatedBody');
+        elimBody.innerHTML = '';
+
+        const eliminados = catData.inscritos
+          .filter(n => !catData.finalistasList.includes(n))
+          .sort((a, b) => (catData.puntosQualy[b] || 0) - (catData.puntosQualy[a] || 0));
+
+        if (eliminados.length === 0) {
+          elimBody.innerHTML = `<tr><td colspan="4" style="color:var(--text-muted); font-size:0.85rem;">Todos los inscritos están en la lista de finalistas.</td></tr>`;
+        } else {
+          eliminados.forEach((nombre, idx) => {
+            const ptsQ = catData.puntosQualy[nombre] || 0;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td><strong>${idx + 3}°</strong></td>
+              <td style="font-weight:600;">${nombre}</td>
+              <td style="font-family:'Anton',sans-serif; font-size:1.35rem; color:var(--text-muted);">${ptsQ}</td>
+              <td>
+                <button
+                  class="btn-second-chance"
+                  onclick="activarSecondChanceTriple('${nombre.replace(/'/g, "\\'")}')"
+                >
+                  ⚡ Second Chance
+                </button>
+              </td>
+            `;
+            elimBody.appendChild(tr);
+          });
+        }
+      }
+    }
+
+    function armarFinalTriples() {
+      const catData = appData.categorias[currentCat];
+      if (catData.inscritos.length < 2) {
+        alert('⚠️ Necesitas al menos 2 lanzadores inscritos.');
+        return;
+      }
+
+      pausarTimer();
+      activeTripleShooter = null;
+
+      const ranking = [...catData.inscritos].sort((a, b) => {
+        return (catData.puntosQualy[b] || 0) - (catData.puntosQualy[a] || 0);
+      });
+
+      catData.enFinal = true;
+      catData.finalistasList = [ranking[0], ranking[1]];
+      catData.puntosFinal = {
+        [ranking[0]]: 0,
+        [ranking[1]]: 0
+      };
+      catData.ganador = '';
+
+      persistirDB();
+      renderCategoria();
+    }
+
+    function volverAClasificatoriaTriples() {
+      pausarTimer();
+      activeTripleShooter = null;
+      appData.categorias[currentCat].enFinal = false;
+      persistirDB();
+      renderCategoria();
+    }
+
+    function activarSecondChanceTriple(nombre) {
+      const catData = appData.categorias[currentCat];
+      if (!catData.finalistasList.includes(nombre)) {
+        catData.finalistasList.push(nombre);
+        catData.puntosFinal[nombre] = 0;
+        persistirDB();
+        renderTriples();
+      }
+    }
+
+    function quitarDeFinalTriple(nombre) {
+      const catData = appData.categorias[currentCat];
+      if (activeTripleShooter && activeTripleShooter.nombre === nombre) {
+        pausarTimer();
+        activeTripleShooter = null;
+      }
+      catData.finalistasList = catData.finalistasList.filter(n => n !== nombre);
+      delete catData.puntosFinal[nombre];
+      persistirDB();
+      renderTriples();
+    }
+
+    function coronarCampeonTriples() {
+      const catData = appData.categorias[currentCat];
+      if (!catData.finalistasList || catData.finalistasList.length === 0) return;
+
+      const ordenFinal = [...catData.finalistasList].sort((a, b) => {
+        return (catData.puntosFinal[b] || 0) - (catData.puntosFinal[a] || 0);
+      });
+
+      if (ordenFinal.length >= 2) {
+        const pts1 = catData.puntosFinal[ordenFinal[0]] || 0;
+        const pts2 = catData.puntosFinal[ordenFinal[1]] || 0;
+        if (pts1 === pts2) {
+          alert(`⚠️ Hay empate en ${pts1} puntos entre ${ordenFinal[0]} y ${ordenFinal[1]}. Llámalos a cancha en Muerte Súbita para desempatar.`);
+          return;
+        }
+      }
+
+      pausarTimer();
+      activeTripleShooter = null;
+      catData.ganador = ordenFinal[0];
+      persistirDB();
+      renderCategoria();
+      alert(`👑 ¡CAMPEÓN DE TRIPLES: ${catData.ganador}!`);
+    }
+
+    function reiniciarTorneoCategoria() {
+      if (!confirm('¿Reiniciar las llaves y puntajes de esta categoría? (Los inscritos se mantendrán).')) return;
+      pausarTimer();
+      const catData = appData.categorias[currentCat];
+      catData.ganador = '';
+      if (CAT_CONFIG[currentCat].tipo === 'duelo') {
+        catData.rondaActual = 0;
+        catData.partidos = [];
+        activeMatchIndex = null;
+        document.getElementById('scoreboardBox').classList.add('hidden');
+      } else {
+        activeTripleShooter = null;
+        catData.enFinal = false;
+        catData.finalistasList = [];
+        catData.puntosFinal = {};
+        catData.inscritos.forEach(n => catData.puntosQualy[n] = 0);
+      }
+      persistirDB();
+      renderCategoria();
+    }
+
+    /* ================= EXPORTAR CSV Y PROTECCIÓN LIMPIAR STOP ================= */
+    function exportarCSV() {
+      let csv = '\uFEFF';
+      csv += 'Stop,Comuna,Fecha,Categoria,Participante/Equipo,Detalle/Puntaje,Campeon Categoria,Chosen Electo\n';
+
+      const chosenName = appData.chosen.elegido || 'Pendiente';
+
+      Object.keys(CAT_CONFIG).forEach(key => {
+        const cfg = CAT_CONFIG[key];
+        const cat = appData.categorias[key];
+        const ganador = cat.ganador || 'Pendiente';
+
+        if (cat.inscritos.length === 0) {
+          csv += `"${appData.stop.nombre}","${appData.stop.comuna}","${appData.stop.fecha}","${cfg.titulo}","Sin inscritos","-","${ganador}","${chosenName}"\n`;
+        } else {
+          cat.inscritos.forEach(item => {
+            let detalle = 'Participante';
+            if (cfg.tipo === 'triples') {
+              const q = cat.puntosQualy[item] || 0;
+              const f = (cat.puntosFinal && cat.puntosFinal[item] !== undefined) ? ` | Final: ${cat.puntosFinal[item]}` : '';
+              detalle = `Qualy: ${q}${f}`;
+            }
+            csv += `"${appData.stop.nombre}","${appData.stop.comuna}","${appData.stop.fecha}","${cfg.titulo}","${item}","${detalle}","${ganador}","${chosenName}"\n`;
+          });
+        }
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ReyesDeLaKncha_${appData.stop.comuna || 'Stop'}_${appData.stop.fecha}.csv`;
+      a.click();
+    }
+
+    function abrirModalLimpiarStop() {
+      const a = Math.floor(Math.random() * 15) + 6;
+      const b = Math.floor(Math.random() * 9) + 2;
+      const esSuma = Math.random() > 0.5;
+
+      if (esSuma) {
+        mathExpectedAnswer = a + b;
+        document.getElementById('mathQuestionText').textContent = `${a} + ${b} = ?`;
+      } else {
+        mathExpectedAnswer = a - b;
+        document.getElementById('mathQuestionText').textContent = `${a} - ${b} = ?`;
+      }
+
+      document.getElementById('mathAnswerInput').value = '';
+      document.getElementById('mathErrorMsg').classList.add('hidden');
+      document.getElementById('mathStepBox').classList.remove('hidden');
+      document.getElementById('finalConfirmStepBox').classList.add('hidden');
+      document.getElementById('clearStopModal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('mathAnswerInput').focus(), 100);
+    }
+
+    function cerrarModalLimpiarStop() {
+      document.getElementById('clearStopModal').classList.add('hidden');
+    }
+
+    function verificarProblemaMatematico() {
+      const val = parseInt(document.getElementById('mathAnswerInput').value, 10);
+      if (val === mathExpectedAnswer) {
+        document.getElementById('mathErrorMsg').classList.add('hidden');
+        document.getElementById('mathStepBox').classList.add('hidden');
+        document.getElementById('finalConfirmStepBox').classList.remove('hidden');
+      } else {
+        document.getElementById('mathErrorMsg').classList.remove('hidden');
+        document.getElementById('mathAnswerInput').focus();
+      }
+    }
+
+    function ejecutarLimpiezaDefinitivaStop() {
+      appData = crearEstructuraVacia();
+      persistirDB();
+      cerrarModalLimpiarStop();
+      volverInicio();
+    }
+  </script>
+</body>
+</html>
