@@ -1,25 +1,19 @@
 {
+  "id": "/reyes-kncha-app",
   "name": "Reyes de la Kncha | Tiempo Fuera",
   "short_name": "Reyes Kncha",
   "description": "Sistema oficial de gestión de torneos, marcadores y proyección TV de Reyes de la Kncha.",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "orientation": "any",
+  "orientation": "portrait-primary",
   "background_color": "#09090b",
   "theme_color": "#ff4d00",
   "icons": [
     {
       "src": "logo-reyes.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "logo-reyes.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "sizes": "any",
+      "type": "image/png"
     }
   ]
 }
