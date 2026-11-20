@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reyes de la Kncha | Control y Proyección TV - Tiempo Fuera</title>
+  <title>Reyes de la Kncha | Liga Anual y Proyección TV - Tiempo Fuera</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -53,7 +53,7 @@
         url('https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
     }
 
-    /* Pantalla de Login / Control de Acceso */
+    /* Pantalla de Login */
     .auth-gate {
       position: fixed;
       inset: 0;
@@ -160,7 +160,8 @@
     .brand-right {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.65rem;
+      flex-wrap: wrap;
     }
 
     .btn-tv-launch {
@@ -168,16 +169,16 @@
       color: #000;
       font-family: 'Oswald', sans-serif;
       font-weight: 700;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       letter-spacing: 0.8px;
       text-transform: uppercase;
       border: none;
-      padding: 0.6rem 1rem;
+      padding: 0.58rem 0.95rem;
       border-radius: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.35rem;
       box-shadow: 0 0 18px rgba(255, 77, 0, 0.45);
       transition: transform 0.15s, box-shadow 0.15s;
     }
@@ -207,8 +208,6 @@
         drop-shadow(0 0 12px rgba(255, 255, 255, 0.75));
       transition: transform 0.2s ease;
     }
-
-    .logo-tf-img:hover { transform: scale(1.04); }
 
     main {
       max-width: 1200px;
@@ -246,11 +245,11 @@
       color: #000;
       font-family: 'Oswald', sans-serif;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.95rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
       border: none;
-      padding: 0.75rem 1.35rem;
+      padding: 0.65rem 1.15rem;
       border-radius: 8px;
       cursor: pointer;
       box-shadow: 0 4px 16px rgba(250, 204, 21, 0.35);
@@ -260,10 +259,10 @@
       background: rgba(255, 255, 255, 0.1);
       color: #fff;
       border: 1px solid rgba(255, 255, 255, 0.22);
-      padding: 0.62rem 1rem;
+      padding: 0.58rem 0.95rem;
       border-radius: 8px;
       font-weight: 700;
-      font-size: 0.84rem;
+      font-size: 0.83rem;
       cursor: pointer;
     }
 
@@ -287,10 +286,10 @@
       background: rgba(220, 38, 38, 0.18);
       color: #f87171;
       border: 1px solid rgba(220, 38, 38, 0.4);
-      padding: 0.62rem 1rem;
+      padding: 0.58rem 0.95rem;
       border-radius: 8px;
       font-weight: 700;
-      font-size: 0.84rem;
+      font-size: 0.83rem;
       cursor: pointer;
     }
 
@@ -320,11 +319,6 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       cursor: pointer;
-      transition: background 0.15s;
-    }
-
-    .btn-second-chance:hover {
-      background: rgba(250, 204, 21, 0.3);
     }
 
     /* VISTA 1: LANDING / INICIO */
@@ -531,7 +525,7 @@
 
     .db-panel {
       background: rgba(15, 15, 18, 0.92);
-      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border: 1px dashed rgba(255, 255, 255, 0.22);
       border-radius: 12px;
       padding: 1.2rem 1.4rem;
       display: flex;
@@ -539,6 +533,42 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .operators-panel {
+      background: rgba(18, 22, 28, 0.92);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-left: 5px solid #38bdf8;
+      border-radius: 12px;
+      padding: 1.25rem 1.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .operators-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.85rem;
+    }
+
+    .op-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #e0f2fe;
+      padding: 0.38rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .op-chip.admin-chip {
+      background: rgba(255, 77, 0, 0.16);
+      border-color: rgba(255, 77, 0, 0.45);
+      color: #ffedd5;
     }
 
     /* VISTA 2: PANEL DE COMPETENCIA */
@@ -570,12 +600,12 @@
 
     .comp-grid {
       display: grid;
-      grid-template-columns: 350px 1fr;
+      grid-template-columns: 370px 1fr;
       gap: 1.5rem;
       align-items: start;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 920px) {
       .comp-grid { grid-template-columns: 1fr; }
     }
 
@@ -610,15 +640,17 @@
       gap: 0.5rem;
     }
 
-    .add-row {
+    .reg-stack {
       display: flex;
-      gap: 0.5rem;
+      flex-direction: column;
+      gap: 0.55rem;
       margin-bottom: 1rem;
+      position: relative;
     }
 
-    .add-row input, .add-row select {
-      flex: 1;
-      background: rgba(0, 0, 0, 0.7);
+    .reg-stack input, .add-row input, .add-row select {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.72);
       border: 1px solid rgba(255, 255, 255, 0.25);
       color: #fff;
       padding: 0.65rem 0.85rem;
@@ -628,9 +660,43 @@
       min-width: 0;
     }
 
+    .reg-stack input:focus {
+      outline: none;
+      border-color: var(--orange-main);
+    }
+
+    .autocomplete-box {
+      background: #18181f;
+      border: 1px solid var(--orange-main);
+      border-radius: 8px;
+      max-height: 165px;
+      overflow-y: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+    }
+
+    .autocomplete-item {
+      padding: 0.55rem 0.85rem;
+      font-size: 0.86rem;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .autocomplete-item:hover {
+      background: rgba(255, 77, 0, 0.22);
+    }
+
+    .add-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
     .inscritos-list {
       list-style: none;
-      max-height: 300px;
+      max-height: 320px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -642,10 +708,18 @@
       justify-content: space-between;
       align-items: center;
       background: rgba(255, 255, 255, 0.05);
-      padding: 0.55rem 0.8rem;
+      padding: 0.6rem 0.8rem;
       border-radius: 7px;
       font-size: 0.9rem;
       font-weight: 600;
+      gap: 0.5rem;
+    }
+
+    .inscrito-contact-sub {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 0.15rem;
     }
 
     .btn-del-mini {
@@ -820,7 +894,7 @@
     }
 
     .match-card.done-match {
-      opacity: 0.72;
+      opacity: 0.78;
       border-left: 4px solid var(--green-win);
     }
 
@@ -829,7 +903,7 @@
       background: rgba(250, 204, 21, 0.07);
     }
 
-    /* Tabla Triples */
+    /* Tabla Triples & Historial */
     .triples-table {
       width: 100%;
       border-collapse: collapse;
@@ -839,13 +913,15 @@
       padding: 0.75rem 0.6rem;
       text-align: left;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.88rem;
     }
 
     .triples-table th {
       font-family: 'Oswald', sans-serif;
       text-transform: uppercase;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
+      letter-spacing: 0.5px;
     }
 
     .row-shooter-active {
@@ -870,7 +946,7 @@
       letter-spacing: 1px;
     }
 
-    /* MODAL DE SEGURIDAD (LIMPIAR STOP) */
+    /* MODAL DE SEGURIDAD */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -1309,6 +1385,9 @@
     </div>
 
     <div class="brand-right">
+      <button class="btn-gold" onclick="abrirVistaHistorial()" title="Ver todos los Stops archivados, Chosen y ganadores del año">
+        📊 Historial Anual
+      </button>
       <button class="btn-secondary" onclick="copiarLinkProyector()" title="Copia el enlace público para proyectar en cualquier TV o celular">
         📋 Link Proyector
       </button>
@@ -1332,7 +1411,7 @@
     <!-- ================= VISTA 1: LANDING PAGE ================= -->
     <div id="view-home">
       <section class="hero">
-        <div class="hero-tag">Sistema Oficial de Competencia Streetball</div>
+        <div class="hero-tag">Liga Anual Oficial Streetball Chile</div>
         <h1>BUSCANDO AL <span class="highlight">REY DE LA KNCHA</span></h1>
         <div class="brush-line"></div>
       </section>
@@ -1346,11 +1425,11 @@
         <div class="form-grid">
           <div class="input-group">
             <label for="stopName">Nombre o N° de Stop</label>
-            <input type="text" id="stopName" placeholder="Ej: Octava Fecha - Cancha Central" />
+            <input type="text" id="stopName" placeholder="Ej: Fecha 1 - Cancha Central" />
           </div>
           <div class="input-group">
             <label for="stopComuna">Comuna / Lugar</label>
-            <input type="text" id="stopComuna" placeholder="Ej: San Bernardo / Quilicura" />
+            <input type="text" id="stopComuna" placeholder="Ej: Quilicura / San Bernardo" />
           </div>
           <div class="input-group">
             <label for="stopDate">Fecha</label>
@@ -1393,7 +1472,7 @@
           <div>
             <div class="cat-badge">Duelo Individual</div>
             <div class="cat-title">1 VS 1</div>
-            <div class="cat-rules"><strong>3 minutos</strong> corridos o el primero que llegue a <strong>5 puntos</strong>. Si es impar, enfrenta al mejor de la ronda.</div>
+            <div class="cat-rules"><strong>3 minutos</strong> corridos o <strong>5 puntos</strong>. Cierre automático al ganar y proyección directa en TV.</div>
             <div id="win-badge-1v1" class="cat-winner-tag hidden"></div>
           </div>
           <div class="cat-footer">
@@ -1406,7 +1485,7 @@
           <div>
             <div class="cat-badge">Equipos Calle</div>
             <div class="cat-title">3 VS 3</div>
-            <div class="cat-rules"><strong>3 minutos</strong> corridos o el primero que llegue a <strong>7 puntos</strong>. Si es impar, enfrenta al mejor de la ronda.</div>
+            <div class="cat-rules"><strong>3 minutos</strong> corridos o <strong>7 puntos</strong>. Cierre automático al ganar y proyección directa en TV.</div>
             <div id="win-badge-3v3" class="cat-winner-tag hidden"></div>
           </div>
           <div class="cat-footer">
@@ -1436,7 +1515,7 @@
           <div class="cat-badge" style="color:var(--gold-chosen);">Votación Interna de Reyes de la Kncha</div>
           <div class="cat-title" style="color:var(--gold-chosen);">EL CHOSEN DEL STOP</div>
           <div class="cat-rules">
-            Arma la lista interna de candidatos destacados de la fecha. <strong>Se proyectará automáticamente en la Pantalla TV solo cuando las 5 competencias tengan a su campeón electo.</strong>
+            Nominados con contacto registrado para la Gran Final Anual. <strong>Se proyectará automáticamente en la Pantalla TV solo cuando las 5 competencias tengan campeón.</strong>
           </div>
           <div id="win-badge-chosen" class="cat-winner-tag hidden" style="border-color:var(--gold-chosen); color:var(--gold-chosen); background:rgba(250,204,21,0.15);"></div>
         </div>
@@ -1446,14 +1525,33 @@
         </div>
       </section>
 
-      <!-- Base de Datos Nube -->
+      <!-- GESTIÓN DE OPERADORES EN TERRENO (SOLO VISIBLE PARA ADMINS) -->
+      <section id="operatorsAdminBox" class="operators-panel hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+          <h3 style="font-family:'Oswald',sans-serif; font-size:1.15rem; text-transform:uppercase; color:#38bdf8;">
+            👥 Operadores Autorizados en Terreno (Reyes de la Kncha)
+          </h3>
+          <span style="font-size:0.78rem; color:var(--text-muted);">Habilita correos Google al instante sin tocar código</span>
+        </div>
+        <p style="font-size:0.84rem; color:var(--text-muted); margin:0.4rem 0 0.85rem;">
+          Ingresa el correo Gmail de los planilleros del evento para permitirles entrar a la Mesa de Control desde sus celulares:
+        </p>
+        <div class="add-row" style="max-width:520px; margin-bottom:0.4rem;">
+          <input type="email" id="newOperatorEmail" placeholder="ejemplo.planillero@gmail.com" onkeypress="if(event.key==='Enter') agregarOperadorTerreno()" />
+          <button class="btn-primary" onclick="agregarOperadorTerreno()">+ Autorizar</button>
+        </div>
+        <div id="operatorsChipsList" class="operators-chips"></div>
+      </section>
+
+      <!-- Base de Datos Nube y Archivo Anual -->
       <section class="db-panel">
         <div class="db-info">
-          <h3>☁️ Base de Datos en Tiempo Real (Firebase)</h3>
-          <p id="summaryText">Sincronizado en tiempo real con la Pantalla de Proyección TV.</p>
+          <h3>☁️ Cierre de Stop y Archivo Anual Firebase</h3>
+          <p id="summaryText">Guarda este Stop en el Historial Anual antes de iniciar una nueva fecha.</p>
         </div>
-        <div class="db-actions">
-          <button class="btn-secondary" onclick="exportarCSV()">📥 Descargar para Google Sheets (CSV)</button>
+        <div style="display:flex; gap:0.65rem; flex-wrap:wrap;">
+          <button class="btn-success" onclick="archivarStopEnHistorial()">🏆 Archivar Stop en Historial Anual</button>
+          <button class="btn-secondary" onclick="exportarCSV()">📥 CSV Stop Actual</button>
           <button class="btn-danger" onclick="abrirModalLimpiarStop()">🗑️ Limpiar Stop</button>
         </div>
       </section>
@@ -1477,16 +1575,38 @@
       </div>
 
       <div class="comp-grid">
-        <!-- Columna Izquierda -->
+        <!-- Columna Izquierda: Registro Obligatorio con Contacto + Autocompletado -->
         <div>
           <div class="panel-box">
             <h3>
-              <span>📝 Inscripciones</span>
+              <span>📝 Inscripción Oficial</span>
               <span id="compCountBadge" style="color:var(--orange-main);">0</span>
             </h3>
-            <div class="add-row">
-              <input type="text" id="newParticipantInput" placeholder="Nombre jugador o equipo..." onkeypress="if(event.key==='Enter') agregarInscrito()" />
-              <button class="btn-primary" onclick="agregarInscrito()">+</button>
+            <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:0.75rem;">
+              En pantalla solo se verá el <strong>Apodo / Nombre</strong>. Teléfono y correo quedan privados para la Gran Final Anual (obligatorio al menos uno).
+            </p>
+            <div class="reg-stack">
+              <input
+                type="text"
+                id="newParticipantInput"
+                placeholder="Apodo o Nombre de Equipo (Público)*"
+                oninput="buscarJugadorExistente(this.value)"
+                onkeypress="if(event.key==='Enter') agregarInscrito()"
+              />
+              <div id="autocompleteDropdown" class="autocomplete-box hidden"></div>
+              <input
+                type="tel"
+                id="newParticipantPhone"
+                placeholder="Teléfono / WhatsApp (Privado)"
+                onkeypress="if(event.key==='Enter') agregarInscrito()"
+              />
+              <input
+                type="email"
+                id="newParticipantEmail"
+                placeholder="Correo electrónico (Privado)"
+                onkeypress="if(event.key==='Enter') agregarInscrito()"
+              />
+              <button class="btn-primary" style="width:100%;" onclick="agregarInscrito()">+ Inscribir Participante</button>
             </div>
             <ul id="inscritosList" class="inscritos-list"></ul>
           </div>
@@ -1496,7 +1616,7 @@
               <span>📥 Traer Equipos desde 3 vs 3</span>
             </h3>
             <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.8rem;">
-              Reutiliza los equipos ya creados en el <strong>3 vs 3</strong> sin volver a escribirlos:
+              Reutiliza los equipos ya creados en el <strong>3 vs 3</strong> (con sus datos de contacto):
             </p>
             <div class="add-row" style="margin-bottom:0.65rem;">
               <select id="select3v3Team"></select>
@@ -1553,8 +1673,8 @@
                 </div>
               </div>
 
-              <div style="text-align:center; margin-top:1.4rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.1);">
-                <button class="btn-primary" onclick="finalizarPartidoActual()">✅ Confirmar Ganador y Cerrar Partido</button>
+              <div style="text-align:center; margin-top:1.25rem; padding-top:0.9rem; border-top:1px solid rgba(255,255,255,0.1); font-size:0.8rem; color:var(--text-muted);">
+                ⚡ El partido se cierra y anuncia al ganador <strong>automáticamente</strong> al llegar a la meta de puntos o al terminar el reloj.
               </div>
             </div>
 
@@ -1633,7 +1753,7 @@
                   </div>
                 </h3>
                 <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:1rem;">
-                  Llama de a uno a la cancha para su ronda final de 1 minuto. Si hay empate, desempata con <strong>Muerte Súbita</strong>.
+                  Llama de a uno a la cancha para su ronda final de 1 minuto. Cuando lancen todos, presiona <strong>"👑 Coronar Campeón"</strong> para anunciarlo en la TV.
                 </p>
                 <table class="triples-table">
                   <thead>
@@ -1698,12 +1818,31 @@
               <span>📝 Candidatos Nominados</span>
               <span id="chosenCountBadge" style="color:var(--gold-chosen);">0</span>
             </h3>
-            <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.85rem;">
-              Esta lista es interna. No se proyectará en la TV hasta que las 5 competencias tengan campeón.
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.8rem;">
+              Registra su apodo y teléfono/correo para poder contactarlo para la Gran Final Anual.
             </p>
-            <div class="add-row">
-              <input type="text" id="newChosenInput" placeholder="Nombre del jugador nominado..." onkeypress="if(event.key==='Enter') agregarCandidatoChosen()" />
-              <button class="btn-gold" onclick="agregarCandidatoChosen()">+</button>
+            <div class="reg-stack">
+              <input
+                type="text"
+                id="newChosenInput"
+                placeholder="Apodo / Nombre del jugador nominado*"
+                oninput="buscarJugadorChosen(this.value)"
+                onkeypress="if(event.key==='Enter') agregarCandidatoChosen()"
+              />
+              <div id="autocompleteChosenDropdown" class="autocomplete-box hidden"></div>
+              <input
+                type="tel"
+                id="newChosenPhone"
+                placeholder="Teléfono / WhatsApp (Privado)"
+                onkeypress="if(event.key==='Enter') agregarCandidatoChosen()"
+              />
+              <input
+                type="email"
+                id="newChosenEmail"
+                placeholder="Correo electrónico (Privado)"
+                onkeypress="if(event.key==='Enter') agregarCandidatoChosen()"
+              />
+              <button class="btn-gold" style="width:100%;" onclick="agregarCandidatoChosen()">+ Nominar Candidato</button>
             </div>
             <ul id="chosenCandidatesList" class="inscritos-list"></ul>
           </div>
@@ -1731,6 +1870,66 @@
         </div>
       </div>
     </div>
+
+    <!-- ================= VISTA 4: HISTORIAL ANUAL Y PADRÓN DE FINALISTAS ================= -->
+    <div id="view-history" class="hidden">
+      <div class="comp-topbar">
+        <div class="comp-title-box">
+          <h2 style="color:var(--gold-chosen);">📊 HISTORIAL ANUAL Y FINALISTAS</h2>
+          <p>Todos los Stops archivados, Chosen electos y campeones con sus contactos para la Gran Final Anual</p>
+        </div>
+        <div style="display:flex; gap:0.65rem; flex-wrap:wrap;">
+          <button class="btn-gold" onclick="exportarCSVAnual()">📥 Descargar Reporte Anual (CSV)</button>
+          <button class="btn-secondary" onclick="volverInicio()">← Volver al Stop Actual</button>
+        </div>
+      </div>
+
+      <!-- Tabla Consolidada de Chosen y Campeones por Stop -->
+      <div class="panel-box" style="border-color:rgba(250,204,21,0.45);">
+        <h3>
+          <span>🏆 Clasificados a la Gran Final Anual (Por Fecha / Stop)</span>
+          <span id="historyCountPill" class="status-pill">0 Stops Archivados</span>
+        </h3>
+        <div style="overflow-x:auto;">
+          <table class="triples-table">
+            <thead>
+              <tr>
+                <th>Fecha / Stop</th>
+                <th>Comuna</th>
+                <th>⭐ El Chosen (Contacto)</th>
+                <th>👑 Campeones del Stop (Contacto)</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="historyStopsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Padrón Histórico de Jugadores Registrados -->
+      <div class="panel-box">
+        <h3>
+          <span>📒 Padrón Único de Jugadores Registrados (Base de Datos Nube)</span>
+          <span id="playersDbCount" style="color:var(--orange-main);">0 jugadores</span>
+        </h3>
+        <p style="font-size:0.83rem; color:var(--text-muted); margin-bottom:0.85rem;">
+          Cada jugador inscrito queda guardado aquí automáticamente para autocompletar sus datos en futuros Stops y contactarlos a fin de año.
+        </p>
+        <div style="overflow-x:auto; max-height:360px;">
+          <table class="triples-table">
+            <thead>
+              <tr>
+                <th>Apodo / Nombre</th>
+                <th>Teléfono / WhatsApp</th>
+                <th>Correo Electrónico</th>
+                <th>Último Stop</th>
+              </tr>
+            </thead>
+            <tbody id="playersDbBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </main>
 
   <footer id="mainFooter" class="hidden">
@@ -1742,7 +1941,7 @@
     <div class="modal-card">
       <h3>⚠️ ¡ADVERTENCIA CRÍTICA!</h3>
       <p style="font-size:0.95rem; color:#e2e8f0; line-height:1.45;">
-        Estás a punto de <strong>ELIMINAR TODOS LOS DATOS</strong> de este Stop (inscritos, puntajes, llaves, campeones y lista de El Chosen). Esta acción no se puede deshacer.
+        Estás a punto de <strong>ELIMINAR TODOS LOS DATOS</strong> del Stop actual sin archivarlos. Si ya terminó la fecha, usa primero el botón verde <em>"Archivar Stop en Historial Anual"</em>.
       </p>
 
       <div id="mathStepBox" class="math-challenge-box">
@@ -1762,7 +1961,7 @@
 
       <div id="finalConfirmStepBox" class="math-challenge-box hidden" style="border-color:#ef4444; background:rgba(220,38,38,0.12);">
         <div style="font-size:0.95rem; font-weight:800; color:#fca5a5; margin-bottom:0.6rem;">
-          🚨 SEGUNDA ADVERTENCIA: ¿Confirmas que ya descargaste el archivo CSV y deseas borrar todo el Stop?
+          🚨 SEGUNDA ADVERTENCIA: ¿Confirmas que deseas borrar todo el Stop actual?
         </div>
         <div style="display:flex; justify-content:center; gap:0.75rem; flex-wrap:wrap; margin-top:1rem;">
           <button class="btn-secondary" onclick="cerrarModalLimpiarStop()">No, Cancelar</button>
@@ -1803,14 +2002,14 @@
     </div>
   </div>
 
-  <!-- Firebase SDK (Compat v10 para ejecución directa sin compilador) -->
+  <!-- Firebase SDK (Compat v10) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
   <script>
     /* ================= CONFIGURACIÓN DE FIREBASE ================= */
-const firebaseConfig = {
+    const firebaseConfig = {
       apiKey: "AIzaSyCHiOwiYyUitWcoE9OUiAjVTbJf42woSPw",
       authDomain: "reyes-de-la-kncha.firebaseapp.com",
       databaseURL: "https://reyes-de-la-kncha-default-rtdb.firebaseio.com",
@@ -1821,7 +2020,7 @@ const firebaseConfig = {
       measurementId: "G-6VHKH2P0SH"
     };
 
-    const ALLOWED_EMAILS = ['hernan.araus@gmail.com'];
+    const SUPER_ADMINS = ['hernan.araus@gmail.com', 'contacto@tiempofuera.cl'];
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
@@ -1829,8 +2028,25 @@ const firebaseConfig = {
 
     const STOP_REF = db.ref('stop_actual');
     const LIVE_REF = db.ref('pantalla_tv');
+    const OPS_REF  = db.ref('operadores_autorizados');
+    const PLAYERS_REF = db.ref('jugadores_db');
+    const HISTORY_REF = db.ref('historial_stops');
 
     const IS_TV_MODE = new URLSearchParams(window.location.search).get('tv') === '1';
+
+    function emailToKey(email) {
+      return email.toLowerCase().trim().replace(/\./g, ',');
+    }
+
+    function keyToEmail(key) {
+      return key.replace(/,/g, '.');
+    }
+
+    function slugifyPlayer(apodo) {
+      return apodo.toLowerCase().trim()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9_-]/g, '_');
+    }
 
     const CAT_CONFIG = {
       triples_infantil: {
@@ -1848,7 +2064,7 @@ const firebaseConfig = {
       '1v1': {
         titulo: '1 VS 1 Streetball',
         corto: '1 VS 1',
-        subtitulo: '3 minutos o 5 pts • Si es impar, enfrenta al mejor de la ronda',
+        subtitulo: '3 minutos o 5 pts • Cierre automático al ganar',
         tipo: 'duelo',
         duracionSeg: 180,
         metaPts: 5
@@ -1856,7 +2072,7 @@ const firebaseConfig = {
       '3v3': {
         titulo: '3 VS 3 Calle',
         corto: '3 VS 3',
-        subtitulo: '3 minutos o 7 pts • Si es impar, enfrenta al mejor de la ronda',
+        subtitulo: '3 minutos o 7 pts • Cierre automático al ganar',
         tipo: 'duelo',
         duracionSeg: 180,
         metaPts: 7
@@ -1864,7 +2080,7 @@ const firebaseConfig = {
       '5v5': {
         titulo: '5 VS 5 Cancha Completa',
         corto: '5 VS 5',
-        subtitulo: 'Tiempo corrido: 5 minutos • Gana el mayor puntaje (1 pt y 2 pts)',
+        subtitulo: 'Tiempo corrido: 5 minutos • Cierre automático por tiempo',
         tipo: 'duelo',
         duracionSeg: 300,
         metaPts: null
@@ -1879,22 +2095,27 @@ const firebaseConfig = {
           fecha: new Date().toISOString().split('T')[0]
         },
         categorias: {
-          triples_infantil: { inscritos: [], puntosQualy: {}, enFinal: false, finalistasList: [], puntosFinal: {}, ganador: '' },
-          triples_tc:       { inscritos: [], puntosQualy: {}, enFinal: false, finalistasList: [], puntosFinal: {}, ganador: '' },
-          '1v1':            { inscritos: [], rondaActual: 0, partidos: [], ganador: '' },
-          '3v3':            { inscritos: [], rondaActual: 0, partidos: [], ganador: '' },
-          '5v5':            { inscritos: [], rondaActual: 0, partidos: [], ganador: '' }
+          triples_infantil: { inscritos: [], contactos: {}, puntosQualy: {}, enFinal: false, finalistasList: [], puntosFinal: {}, ganador: '' },
+          triples_tc:       { inscritos: [], contactos: {}, puntosQualy: {}, enFinal: false, finalistasList: [], puntosFinal: {}, ganador: '' },
+          '1v1':            { inscritos: [], contactos: {}, rondaActual: 0, partidos: [], ganador: '' },
+          '3v3':            { inscritos: [], contactos: {}, rondaActual: 0, partidos: [], ganador: '' },
+          '5v5':            { inscritos: [], contactos: {}, rondaActual: 0, partidos: [], ganador: '' }
         },
         chosen: {
           candidatos: [],
+          contactos: {},
           elegido: ''
         }
       };
     }
 
     let appData = crearEstructuraVacia();
+    let playersDirectory = {}; // Padrón histórico desde Firebase
+    let archivedStops = {};    // Historial anual desde Firebase
+
     let currentCat = null;
     let isChosenViewOpen = false;
+    let isHistoryViewOpen = false;
     let activeMatchIndex = null;
     let activeTripleShooter = null;
     let timerInterval = null;
@@ -1912,6 +2133,7 @@ const firebaseConfig = {
       base.stop = { ...base.stop, ...(raw.stop || {}) };
       base.chosen = {
         candidatos: Array.isArray(raw.chosen?.candidatos) ? raw.chosen.candidatos : [],
+        contactos: raw.chosen?.contactos || {},
         elegido: raw.chosen?.elegido || ''
       };
       Object.keys(CAT_CONFIG).forEach(k => {
@@ -1919,6 +2141,7 @@ const firebaseConfig = {
         if (CAT_CONFIG[k].tipo === 'triples') {
           base.categorias[k] = {
             inscritos: Array.isArray(c.inscritos) ? c.inscritos : [],
+            contactos: c.contactos || {},
             puntosQualy: c.puntosQualy || {},
             enFinal: Boolean(c.enFinal),
             finalistasList: Array.isArray(c.finalistasList) ? c.finalistasList : [],
@@ -1928,6 +2151,7 @@ const firebaseConfig = {
         } else {
           base.categorias[k] = {
             inscritos: Array.isArray(c.inscritos) ? c.inscritos : [],
+            contactos: c.contactos || {},
             rondaActual: c.rondaActual || 0,
             partidos: Array.isArray(c.partidos) ? c.partidos : [],
             ganador: c.ganador || ''
@@ -1937,7 +2161,7 @@ const firebaseConfig = {
       return base;
     }
 
-    /* ================= ARRANQUE SEGÚN MODO (TV VS CONTROL) ================= */
+    /* ================= ARRANQUE SEGÚN MODO ================= */
     window.onload = () => {
       if (IS_TV_MODE) {
         iniciarModoTV();
@@ -1946,7 +2170,7 @@ const firebaseConfig = {
 
       document.getElementById('authGate').classList.remove('hidden');
 
-      auth.onAuthStateChanged((user) => {
+      auth.onAuthStateChanged(async (user) => {
         const loadingText = document.getElementById('authLoadingText');
         const btnLogin = document.getElementById('btnGoogleLogin');
         const errBox = document.getElementById('authErrorBox');
@@ -1961,22 +2185,40 @@ const firebaseConfig = {
           return;
         }
 
-        const email = (user.email || '').toLowerCase();
-        if (!ALLOWED_EMAILS.includes(email)) {
+        const email = (user.email || '').toLowerCase().trim();
+        const esSuperAdmin = SUPER_ADMINS.includes(email);
+        let esOperadorTerreno = false;
+
+        if (!esSuperAdmin) {
+          try {
+            const snap = await OPS_REF.child(emailToKey(email)).once('value');
+            esOperadorTerreno = (snap.val() === true);
+          } catch (e) {
+            esOperadorTerreno = false;
+          }
+        }
+
+        if (!esSuperAdmin && !esOperadorTerreno) {
           loadingText.classList.add('hidden');
           btnLogin.classList.remove('hidden');
-          errBox.textContent = `⛔ El correo ${email} no tiene permisos de operador. Usa una cuenta autorizada.`;
+          errBox.innerHTML = `⛔ El correo <strong>${email}</strong> aún no está autorizado.<br>Pídele al administrador en cancha que agregue tu correo en <em>Operadores Autorizados</em>.`;
           errBox.classList.remove('hidden');
           auth.signOut();
           return;
         }
 
-        // Usuario autorizado: mostrar Mesa de Control y conectar a Realtime Database
         errBox.classList.add('hidden');
         document.getElementById('authGate').classList.add('hidden');
         document.getElementById('mainHeader').classList.remove('hidden');
         document.getElementById('mainControlContainer').classList.remove('hidden');
         document.getElementById('mainFooter').classList.remove('hidden');
+
+        if (esSuperAdmin) {
+          document.getElementById('operatorsAdminBox').classList.remove('hidden');
+          suscribirOperadoresTerreno();
+        } else {
+          document.getElementById('operatorsAdminBox').classList.add('hidden');
+        }
 
         suscribirDatosControl();
       });
@@ -1997,6 +2239,62 @@ const firebaseConfig = {
       }
     }
 
+    /* ================= GESTIÓN DE OPERADORES EN TERRENO ================= */
+    function suscribirOperadoresTerreno() {
+      OPS_REF.on('value', (snap) => {
+        const data = snap.val() || {};
+        const listEl = document.getElementById('operatorsChipsList');
+        listEl.innerHTML = '';
+
+        SUPER_ADMINS.forEach(adminMail => {
+          const chip = document.createElement('div');
+          chip.className = 'op-chip admin-chip';
+          chip.innerHTML = `<span>👑 ${adminMail} (Admin)</span>`;
+          listEl.appendChild(chip);
+        });
+
+        Object.keys(data).forEach(k => {
+          if (data[k] === true) {
+            const realEmail = keyToEmail(k);
+            const chip = document.createElement('div');
+            chip.className = 'op-chip';
+            chip.innerHTML = `
+              <span>🏀 ${realEmail}</span>
+              <button class="btn-del-mini" style="padding:0 0.25rem;" title="Revocar acceso" onclick="eliminarOperadorTerreno('${k}')">✕</button>
+            `;
+            listEl.appendChild(chip);
+          }
+        });
+      });
+    }
+
+    function agregarOperadorTerreno() {
+      const input = document.getElementById('newOperatorEmail');
+      const email = input.value.trim().toLowerCase();
+      if (!email || !email.includes('@')) {
+        alert('⚠️ Ingresa un correo electrónico válido (ej: nombre@gmail.com).');
+        return;
+      }
+
+      if (SUPER_ADMINS.includes(email)) {
+        alert('Ese correo ya es Administrador permanente.');
+        input.value = '';
+        return;
+      }
+
+      OPS_REF.child(emailToKey(email)).set(true).then(() => {
+        input.value = '';
+        input.focus();
+      });
+    }
+
+    function eliminarOperadorTerreno(key) {
+      const email = keyToEmail(key);
+      if (confirm(`¿Quitar acceso a la Mesa de Control a ${email}?`)) {
+        OPS_REF.child(key).remove();
+      }
+    }
+
     function suscribirDatosControl() {
       STOP_REF.on('value', (snapshot) => {
         appData = normalizarDatosDesdeNube(snapshot.val());
@@ -2007,6 +2305,113 @@ const firebaseConfig = {
         if (currentCat) renderCategoria();
         if (isChosenViewOpen) renderVistaChosen();
       });
+
+      PLAYERS_REF.on('value', (snap) => {
+        playersDirectory = snap.val() || {};
+        if (isHistoryViewOpen) renderVistaHistorial();
+      });
+
+      HISTORY_REF.on('value', (snap) => {
+        archivedStops = snap.val() || {};
+        if (isHistoryViewOpen) renderVistaHistorial();
+      });
+    }
+
+    /* ================= PADRÓN ÚNICO DE JUGADORES (AUTOCOMPLETADO) ================= */
+    function guardarJugadorEnPadron(apodo, telefono, correo) {
+      if (!auth.currentUser || !apodo) return;
+      const slug = slugifyPlayer(apodo);
+      if (!slug) return;
+
+      const existente = playersDirectory[slug] || {};
+      const ficha = {
+        apodo: apodo.trim(),
+        telefono: telefono ? telefono.trim() : (existente.telefono || ''),
+        correo: correo ? correo.trim().toLowerCase() : (existente.correo || ''),
+        ultimoStop: appData.stop.nombre || existente.ultimoStop || '',
+        actualizado: new Date().toISOString().split('T')[0]
+      };
+      PLAYERS_REF.child(slug).set(ficha);
+    }
+
+    function buscarJugadorExistente(texto) {
+      const box = document.getElementById('autocompleteDropdown');
+      const q = texto.trim().toLowerCase();
+      if (q.length < 2) {
+        box.classList.add('hidden');
+        return;
+      }
+
+      const coincidencias = Object.values(playersDirectory).filter(p =>
+        p.apodo && p.apodo.toLowerCase().includes(q)
+      ).slice(0, 6);
+
+      if (coincidencias.length === 0) {
+        box.classList.add('hidden');
+        return;
+      }
+
+      box.innerHTML = '';
+      coincidencias.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'autocomplete-item';
+        const contactoInfo = [p.telefono, p.correo].filter(Boolean).join(' • ');
+        div.innerHTML = `
+          <div>
+            <strong>${p.apodo}</strong>
+            <div style="font-size:0.74rem; color:var(--text-muted);">${contactoInfo}</div>
+          </div>
+          <span style="color:var(--orange-main); font-size:0.78rem; font-weight:700;">Usar ficha →</span>
+        `;
+        div.onclick = () => {
+          document.getElementById('newParticipantInput').value = p.apodo;
+          document.getElementById('newParticipantPhone').value = p.telefono || '';
+          document.getElementById('newParticipantEmail').value = p.correo || '';
+          box.classList.add('hidden');
+        };
+        box.appendChild(div);
+      });
+      box.classList.remove('hidden');
+    }
+
+    function buscarJugadorChosen(texto) {
+      const box = document.getElementById('autocompleteChosenDropdown');
+      const q = texto.trim().toLowerCase();
+      if (q.length < 2) {
+        box.classList.add('hidden');
+        return;
+      }
+
+      const coincidencias = Object.values(playersDirectory).filter(p =>
+        p.apodo && p.apodo.toLowerCase().includes(q)
+      ).slice(0, 6);
+
+      if (coincidencias.length === 0) {
+        box.classList.add('hidden');
+        return;
+      }
+
+      box.innerHTML = '';
+      coincidencias.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'autocomplete-item';
+        const contactoInfo = [p.telefono, p.correo].filter(Boolean).join(' • ');
+        div.innerHTML = `
+          <div>
+            <strong>${p.apodo}</strong>
+            <div style="font-size:0.74rem; color:var(--text-muted);">${contactoInfo}</div>
+          </div>
+          <span style="color:var(--gold-chosen); font-size:0.78rem; font-weight:700;">Usar ficha →</span>
+        `;
+        div.onclick = () => {
+          document.getElementById('newChosenInput').value = p.apodo;
+          document.getElementById('newChosenPhone').value = p.telefono || '';
+          document.getElementById('newChosenEmail').value = p.correo || '';
+          box.classList.add('hidden');
+        };
+        box.appendChild(div);
+      });
+      box.classList.remove('hidden');
     }
 
     /* ================= SINCRONIZACIÓN EN TIEMPO REAL CON PANTALLA TV ================= */
@@ -2085,6 +2490,7 @@ const firebaseConfig = {
       const catData = appData.categorias[currentCat];
       base.categoriaTitulo = cfg.titulo;
 
+      // Si ya existe campeón en la categoría y no hay un duelo/lanzador activo en pantalla, proyecta el campeón automáticamente
       if (catData.ganador && activeMatchIndex === null && !activeTripleShooter) {
         base.modo = 'champion';
         base.campeon = catData.ganador;
@@ -2142,7 +2548,6 @@ const firebaseConfig = {
         }
       });
 
-      // Actualización suave del reloj en la pantalla TV cada 250ms si está corriendo
       tvLocalClockInterval = setInterval(() => {
         if (!lastTvSnapshot || !lastTvSnapshot.relojCorriendo) return;
         const clockEl = document.getElementById('tvLiveClock');
@@ -2272,7 +2677,7 @@ const firebaseConfig = {
       }
 
       stage.innerHTML = `
-        <div class="tv-idle-tag">Competencia Oficial Streetball</div>
+        <div class="tv-idle-tag">Liga Anual Oficial Streetball</div>
         <div class="tv-idle-title">BUSCANDO AL<span>REY DE LA KNCHA</span></div>
         ${renderHtmlFranjaCampeones(s.campeonesStrip)}
       `;
@@ -2329,7 +2734,7 @@ const firebaseConfig = {
 
       if (appData.stop.nombre) {
         document.getElementById('summaryText').textContent =
-          `Stop activo en la nube: "${appData.stop.nombre}" en ${appData.stop.comuna} (${appData.stop.fecha}).`;
+          `Stop activo: "${appData.stop.nombre}" en ${appData.stop.comuna} (${appData.stop.fecha}). Archívalo al cerrar la jornada.`;
       }
     }
 
@@ -2342,6 +2747,7 @@ const firebaseConfig = {
 
       currentCat = catKey;
       isChosenViewOpen = false;
+      isHistoryViewOpen = false;
       activeMatchIndex = null;
       activeTripleShooter = null;
       pausarTimer();
@@ -2349,6 +2755,7 @@ const firebaseConfig = {
       const cfg = CAT_CONFIG[catKey];
       document.getElementById('view-home').classList.add('hidden');
       document.getElementById('view-chosen').classList.add('hidden');
+      document.getElementById('view-history').classList.add('hidden');
       document.getElementById('view-comp').classList.remove('hidden');
 
       document.getElementById('compTitle').textContent = cfg.titulo;
@@ -2363,10 +2770,12 @@ const firebaseConfig = {
       pausarTimer();
       currentCat = null;
       isChosenViewOpen = false;
+      isHistoryViewOpen = false;
       activeTripleShooter = null;
       activeMatchIndex = null;
       document.getElementById('view-comp').classList.add('hidden');
       document.getElementById('view-chosen').classList.add('hidden');
+      document.getElementById('view-history').classList.add('hidden');
       document.getElementById('view-home').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       actualizarContadoresHome();
@@ -2374,23 +2783,48 @@ const firebaseConfig = {
     }
 
     function agregarInscrito() {
-      const input = document.getElementById('newParticipantInput');
-      const nombre = input.value.trim();
-      if (!nombre) return;
+      const inputName = document.getElementById('newParticipantInput');
+      const inputPhone = document.getElementById('newParticipantPhone');
+      const inputEmail = document.getElementById('newParticipantEmail');
+
+      const nombre = inputName.value.trim();
+      const telefono = inputPhone.value.trim();
+      const correo = inputEmail.value.trim().toLowerCase();
+
+      if (!nombre) {
+        alert('⚠️ Debes ingresar el Apodo o Nombre del equipo.');
+        inputName.focus();
+        return;
+      }
+
+      if (!telefono && !correo) {
+        alert('⛔ Regla de Inscripción: Para competir debe registrar al menos un Teléfono (WhatsApp) o un Correo Electrónico para poder ubicarlo en la Gran Final Anual.');
+        inputPhone.focus();
+        return;
+      }
 
       const catData = appData.categorias[currentCat];
       if (catData.inscritos.some(i => i.toLowerCase() === nombre.toLowerCase())) {
-        alert('⚠️ Ese participante o equipo ya está inscrito.');
+        alert('⚠️ Ese participante o equipo ya está inscrito en esta categoría.');
         return;
       }
 
       catData.inscritos.push(nombre);
+      catData.contactos[nombre] = { telefono, correo };
+
       if (CAT_CONFIG[currentCat].tipo === 'triples') {
         catData.puntosQualy[nombre] = 0;
       }
 
-      input.value = '';
-      input.focus();
+      // Guardar o actualizar en el Padrón Único en Firebase
+      guardarJugadorEnPadron(nombre, telefono, correo);
+
+      inputName.value = '';
+      inputPhone.value = '';
+      inputEmail.value = '';
+      document.getElementById('autocompleteDropdown').classList.add('hidden');
+      inputName.focus();
+
       persistirDB();
       renderCategoria();
     }
@@ -2403,6 +2837,7 @@ const firebaseConfig = {
         pausarTimer();
       }
       catData.inscritos.splice(index, 1);
+      if (catData.contactos) delete catData.contactos[nombre];
       if (catData.puntosQualy) delete catData.puntosQualy[nombre];
       if (catData.finalistasList) {
         catData.finalistasList = catData.finalistasList.filter(n => n !== nombre);
@@ -2421,10 +2856,12 @@ const firebaseConfig = {
 
       currentCat = null;
       isChosenViewOpen = true;
+      isHistoryViewOpen = false;
       pausarTimer();
 
       document.getElementById('view-home').classList.add('hidden');
       document.getElementById('view-comp').classList.add('hidden');
+      document.getElementById('view-history').classList.add('hidden');
       document.getElementById('view-chosen').classList.remove('hidden');
 
       document.getElementById('chosenSubtitle').textContent =
@@ -2436,9 +2873,25 @@ const firebaseConfig = {
     }
 
     function agregarCandidatoChosen() {
-      const input = document.getElementById('newChosenInput');
-      const nombre = input.value.trim();
-      if (!nombre) return;
+      const inputName = document.getElementById('newChosenInput');
+      const inputPhone = document.getElementById('newChosenPhone');
+      const inputEmail = document.getElementById('newChosenEmail');
+
+      const nombre = inputName.value.trim();
+      const telefono = inputPhone.value.trim();
+      const correo = inputEmail.value.trim().toLowerCase();
+
+      if (!nombre) {
+        alert('⚠️ Ingresa el apodo o nombre del jugador nominado.');
+        inputName.focus();
+        return;
+      }
+
+      if (!telefono && !correo) {
+        alert('⛔ Regla de Nominación: Debes registrar al menos un Teléfono o Correo Electrónico del nominado para poder ubicarlo en la Gran Final Anual.');
+        inputPhone.focus();
+        return;
+      }
 
       if (appData.chosen.candidatos.some(c => c.toLowerCase() === nombre.toLowerCase())) {
         alert('⚠️ Ese jugador ya está en la lista de nominados.');
@@ -2446,8 +2899,15 @@ const firebaseConfig = {
       }
 
       appData.chosen.candidatos.push(nombre);
-      input.value = '';
-      input.focus();
+      appData.chosen.contactos[nombre] = { telefono, correo };
+      guardarJugadorEnPadron(nombre, telefono, correo);
+
+      inputName.value = '';
+      inputPhone.value = '';
+      inputEmail.value = '';
+      document.getElementById('autocompleteChosenDropdown').classList.add('hidden');
+      inputName.focus();
+
       persistirDB();
       renderVistaChosen();
     }
@@ -2458,6 +2918,7 @@ const firebaseConfig = {
         appData.chosen.elegido = '';
       }
       appData.chosen.candidatos.splice(idx, 1);
+      if (appData.chosen.contactos) delete appData.chosen.contactos[nombre];
       persistirDB();
       renderVistaChosen();
     }
@@ -2472,7 +2933,6 @@ const firebaseConfig = {
       appData.chosen.elegido = nombre;
       persistirDB();
       renderVistaChosen();
-      alert(`⭐ ¡${nombre.toUpperCase()} HA SIDO CONFIRMADO COMO EL CHOSEN DEL STOP!`);
     }
 
     function limpiarChosenElecto() {
@@ -2495,10 +2955,15 @@ const firebaseConfig = {
       const ul = document.getElementById('chosenCandidatesList');
       ul.innerHTML = '';
       appData.chosen.candidatos.forEach((cand, idx) => {
+        const cInfo = appData.chosen.contactos[cand] || {};
+        const subText = [cInfo.telefono, cInfo.correo].filter(Boolean).join(' • ') || 'Sin contacto';
         const li = document.createElement('li');
         li.className = 'inscrito-item';
         li.innerHTML = `
-          <span>⭐ ${idx + 1}. ${cand}</span>
+          <div>
+            <div>⭐ ${idx + 1}. ${cand}</div>
+            <div class="inscrito-contact-sub">🔒 ${subText}</div>
+          </div>
           <button class="btn-del-mini" onclick="eliminarCandidatoChosen(${idx})" title="Quitar">✕</button>
         `;
         ul.appendChild(li);
@@ -2547,6 +3012,168 @@ const firebaseConfig = {
       });
     }
 
+    /* ================= ARCHIVO ANUAL E HISTORIAL ================= */
+    function archivarStopEnHistorial() {
+      if (!appData.stop.nombre || !appData.stop.comuna) {
+        alert('⚠️ Primero guarda el nombre y comuna del Stop actual.');
+        return;
+      }
+
+      const resumenCategorias = {};
+      Object.keys(CAT_CONFIG).forEach(k => {
+        const cat = appData.categorias[k];
+        const ganador = cat.ganador || 'Sin definir';
+        const cInfo = (cat.ganador && cat.contactos && cat.contactos[cat.ganador])
+          ? cat.contactos[cat.ganador]
+          : (playersDirectory[slugifyPlayer(ganador)] || {});
+
+        resumenCategorias[k] = {
+          titulo: CAT_CONFIG[k].corto,
+          ganador,
+          telefono: cInfo.telefono || '',
+          correo: cInfo.correo || ''
+        };
+      });
+
+      const chosenNombre = appData.chosen.elegido || 'Sin definir';
+      const chosenContacto = (appData.chosen.elegido && appData.chosen.contactos && appData.chosen.contactos[appData.chosen.elegido])
+        ? appData.chosen.contactos[appData.chosen.elegido]
+        : (playersDirectory[slugifyPlayer(chosenNombre)] || {});
+
+      const stopId = `${appData.stop.fecha}_${slugifyPlayer(appData.stop.nombre)}`;
+
+      if (archivedStops[stopId]) {
+        if (!confirm(`Ya existe un registro archivado para "${appData.stop.nombre}" (${appData.stop.fecha}). ¿Deseas sobrescribirlo con los resultados actuales?`)) {
+          return;
+        }
+      }
+
+      const registroHistorico = {
+        id: stopId,
+        nombre: appData.stop.nombre,
+        comuna: appData.stop.comuna,
+        fecha: appData.stop.fecha,
+        chosen: {
+          nombre: chosenNombre,
+          telefono: chosenContacto.telefono || '',
+          correo: chosenContacto.correo || ''
+        },
+        categorias: resumenCategorias,
+        archivadoEn: new Date().toISOString()
+      };
+
+      HISTORY_REF.child(stopId).set(registroHistorico).then(() => {
+        if (confirm(`✅ ¡"${appData.stop.nombre}" fue guardado exitosamente en el Historial Anual!\n\n¿Deseas limpiar la mesa ahora para dejarla lista para el próximo Stop?`)) {
+          ejecutarLimpiezaDefinitivaStop();
+        }
+      });
+    }
+
+    function abrirVistaHistorial() {
+      pausarTimer();
+      currentCat = null;
+      isChosenViewOpen = false;
+      isHistoryViewOpen = true;
+      activeMatchIndex = null;
+      activeTripleShooter = null;
+
+      document.getElementById('view-home').classList.add('hidden');
+      document.getElementById('view-comp').classList.add('hidden');
+      document.getElementById('view-chosen').classList.add('hidden');
+      document.getElementById('view-history').classList.remove('hidden');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderVistaHistorial();
+    }
+
+    function eliminarStopHistorico(id) {
+      if (confirm('¿Eliminar este Stop del historial anual?')) {
+        HISTORY_REF.child(id).remove();
+      }
+    }
+
+    function renderVistaHistorial() {
+      const stopsList = Object.values(archivedStops).sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
+      document.getElementById('historyCountPill').textContent = `${stopsList.length} Stops Archivados`;
+
+      const tbody = document.getElementById('historyStopsBody');
+      tbody.innerHTML = '';
+
+      if (stopsList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="color:var(--text-muted); text-align:center; padding:1.5rem;">Aún no has archivado ningún Stop. Al terminar una fecha, presiona <strong>"🏆 Archivar Stop en Historial Anual"</strong> en el inicio.</td></tr>`;
+      } else {
+        stopsList.forEach(st => {
+          const ch = st.chosen || {};
+          const chContact = [ch.telefono, ch.correo].filter(Boolean).join(' • ') || 'Sin contacto';
+
+          const champsHtml = Object.values(st.categorias || {}).map(c => {
+            const cCont = [c.telefono, c.correo].filter(Boolean).join(' / ');
+            return `<div style="margin-bottom:0.25rem; font-size:0.8rem;">
+              <strong style="color:var(--orange-main);">${c.titulo}:</strong> ${c.ganador}
+              ${cCont ? `<span style="color:var(--text-muted);">(${cCont})</span>` : ''}
+            </div>`;
+          }).join('');
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${st.nombre}</strong><div style="font-size:0.75rem; color:var(--text-muted);">${st.fecha}</div></td>
+            <td>${st.comuna}</td>
+            <td>
+              <div style="color:var(--gold-chosen); font-weight:800;">⭐ ${ch.nombre || '-'}</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">${chContact}</div>
+            </td>
+            <td>${champsHtml}</td>
+            <td>
+              <button class="btn-del-mini" title="Eliminar registro" onclick="eliminarStopHistorico('${st.id}')">✕</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      const playersList = Object.values(playersDirectory).sort((a, b) => (a.apodo || '').localeCompare(b.apodo || ''));
+      document.getElementById('playersDbCount').textContent = `${playersList.length} jugadores`;
+      const pBody = document.getElementById('playersDbBody');
+      pBody.innerHTML = '';
+
+      if (playersList.length === 0) {
+        pBody.innerHTML = `<tr><td colspan="4" style="color:var(--text-muted); text-align:center; padding:1.2rem;">El padrón se llenará automáticamente a medida que inscribas jugadores.</td></tr>`;
+      } else {
+        playersList.forEach(p => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${p.apodo}</strong></td>
+            <td>${p.telefono || '-'}</td>
+            <td>${p.correo || '-'}</td>
+            <td style="color:var(--text-muted);">${p.ultimoStop || '-'}</td>
+          `;
+          pBody.appendChild(tr);
+        });
+      }
+    }
+
+    function exportarCSVAnual() {
+      let csv = '\uFEFF';
+      csv += 'Fecha,Stop,Comuna,Rol / Categoria,Ganador / Chosen,Telefono / WhatsApp,Correo Electronico\n';
+
+      const stopsList = Object.values(archivedStops).sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
+      stopsList.forEach(st => {
+        const ch = st.chosen || {};
+        csv += `"${st.fecha}","${st.nombre}","${st.comuna}","EL CHOSEN DEL STOP","${ch.nombre || '-'}","${ch.telefono || ''}","${ch.correo || ''}"\n`;
+
+        Object.values(st.categorias || {}).forEach(c => {
+          csv += `"${st.fecha}","${st.nombre}","${st.comuna}","Campeon ${c.titulo}","${c.ganador || '-'}","${c.telefono || ''}","${c.correo || ''}"\n`;
+        });
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Reporte_Anual_Finalistas_ReyesDeLaKncha_${new Date().getFullYear()}.csv`;
+      a.click();
+    }
+
     /* ================= IMPORTAR EQUIPOS DESDE 3v3 AL 5v5 ================= */
     function actualizarSelectorImportacion3v3() {
       const box = document.getElementById('importFrom3v3Box');
@@ -2585,9 +3212,13 @@ const firebaseConfig = {
       const equipo = select.value;
       if (!equipo) return;
 
+      const cat3v3 = appData.categorias['3v3'];
       const cat5v5 = appData.categorias['5v5'];
       if (!cat5v5.inscritos.some(e => e.toLowerCase() === equipo.toLowerCase())) {
         cat5v5.inscritos.push(equipo);
+        if (cat3v3.contactos && cat3v3.contactos[equipo]) {
+          cat5v5.contactos[equipo] = { ...cat3v3.contactos[equipo] };
+        }
         persistirDB();
         renderCategoria();
       }
@@ -2595,7 +3226,8 @@ const firebaseConfig = {
 
     function importarTodosDesde3v3() {
       if (currentCat !== '5v5') return;
-      const equipos3v3 = appData.categorias['3v3'].inscritos || [];
+      const cat3v3 = appData.categorias['3v3'];
+      const equipos3v3 = cat3v3.inscritos || [];
       if (equipos3v3.length === 0) {
         alert('⚠️ Todavía no hay equipos inscritos en la categoría 3 vs 3.');
         return;
@@ -2607,6 +3239,9 @@ const firebaseConfig = {
       equipos3v3.forEach(eq => {
         if (!cat5v5.inscritos.some(e5 => e5.toLowerCase() === eq.toLowerCase())) {
           cat5v5.inscritos.push(eq);
+          if (cat3v3.contactos && cat3v3.contactos[eq]) {
+            cat5v5.contactos[eq] = { ...cat3v3.contactos[eq] };
+          }
           agregados++;
         }
       });
@@ -2636,10 +3271,15 @@ const firebaseConfig = {
       const ul = document.getElementById('inscritosList');
       ul.innerHTML = '';
       catData.inscritos.forEach((nombre, idx) => {
+        const cInfo = (catData.contactos && catData.contactos[nombre]) || {};
+        const subText = [cInfo.telefono, cInfo.correo].filter(Boolean).join(' • ') || 'Sin contacto';
         const li = document.createElement('li');
         li.className = 'inscrito-item';
         li.innerHTML = `
-          <span>${idx + 1}. ${nombre}</span>
+          <div>
+            <div>${idx + 1}. ${nombre}</div>
+            <div class="inscrito-contact-sub">🔒 ${subText}</div>
+          </div>
           <button class="btn-del-mini" onclick="eliminarInscrito(${idx})" title="Eliminar">✕</button>
         `;
         ul.appendChild(li);
@@ -2679,7 +3319,7 @@ const firebaseConfig = {
       }
     }
 
-    /* ================= LÓGICA DE DUELOS ================= */
+    /* ================= LÓGICA DE DUELOS CON CIERRE AUTOMÁTICO ================= */
     function mezclarArray(arr) {
       const copy = [...arr];
       for (let i = copy.length - 1; i > 0; i--) {
@@ -2773,7 +3413,6 @@ const firebaseConfig = {
 
       if (mejorGanador && repechaje.teamB !== mejorGanador) {
         repechaje.teamB = mejorGanador;
-        alert(`⚡ ¡CRUCE DE ESPERA LISTO!\n\n${repechaje.teamA} (impar) enfrentará a ${mejorGanador} (Mejor de la Ronda) para definir su pase a la siguiente etapa.`);
       }
     }
 
@@ -2813,7 +3452,12 @@ const firebaseConfig = {
 
         let estadoHtml = '';
         if (p.finalizado) {
-          estadoHtml = `<span style="color:#4ade80; font-weight:800;">Ganador: ${p.ganador} (${p.scoreA}-${p.scoreB})</span>`;
+          estadoHtml = `
+            <div style="display:flex; align-items:center; gap:0.6rem;">
+              <span style="color:#4ade80; font-weight:800;">Ganador: ${p.ganador} (${p.scoreA}-${p.scoreB})</span>
+              <button class="btn-secondary" style="padding:0.25rem 0.55rem; font-size:0.74rem;" onclick="reabrirPartidoCerrado(${idx})" title="Corregir marcador si hubo error de dedo">Editar</button>
+            </div>
+          `;
         } else if (p.esRepechaje && p.teamB.startsWith('⏳')) {
           estadoHtml = `<span style="color:#facc15; font-size:0.82rem; font-weight:700;">Esperando cierre de cruces...</span>`;
         } else {
@@ -2840,7 +3484,7 @@ const firebaseConfig = {
     function abrirMarcadorPartido(index) {
       const partido = appData.categorias[currentCat].partidos[index];
       if (partido.esRepechaje && partido.teamB.startsWith('⏳')) {
-        alert('⏳ Primero debes terminar los demás partidos de esta ronda para conocer al Mejor de la Ronda que enfrentará a ' + partido.teamA + '.');
+        alert('⏳ Primero debes terminar los demás partidos de esta ronda para conocer al Mejor de la Ronda.');
         return;
       }
 
@@ -2870,6 +3514,16 @@ const firebaseConfig = {
       emitirEstadoTV();
     }
 
+    function reabrirPartidoCerrado(index) {
+      const catData = appData.categorias[currentCat];
+      const partido = catData.partidos[index];
+      partido.finalizado = false;
+      partido.ganador = null;
+      catData.ganador = '';
+      abrirMarcadorPartido(index);
+      persistirDB();
+    }
+
     function sumarPuntos(lado, delta) {
       if (activeMatchIndex === null) return;
       const cfg = CAT_CONFIG[currentCat];
@@ -2883,32 +3537,28 @@ const firebaseConfig = {
         document.getElementById('sbScoreB').textContent = partido.scoreB;
       }
 
-      persistirDB();
-
-      if (cfg.metaPts) {
-        if (partido.scoreA >= cfg.metaPts || partido.scoreB >= cfg.metaPts) {
-          pausarTimer();
-          const lider = partido.scoreA >= cfg.metaPts ? partido.teamA : partido.teamB;
-          setTimeout(() => {
-            if (confirm(`🔥 ¡${lider} alcanzó los ${cfg.metaPts} puntos! ¿Confirmar victoria y cerrar partido?`)) {
-              finalizarPartidoActual();
-            }
-          }, 150);
-        }
+      // 1. Si estaban en Muerte Súbita (reloj en 0) y alguien anota un punto de diferencia -> Cierre automático
+      if (secondsLeft === 0 && partido.scoreA !== partido.scoreB) {
+        cerrarPartidoAutomaticamente();
+        return;
       }
+
+      // 2. Si la categoría tiene meta de puntos (5 en 1v1, 7 en 3v3) y alguien la alcanza -> Cierre automático
+      if (cfg.metaPts && (partido.scoreA >= cfg.metaPts || partido.scoreB >= cfg.metaPts)) {
+        cerrarPartidoAutomaticamente();
+        return;
+      }
+
+      persistirDB();
     }
 
-    function finalizarPartidoActual() {
+    function cerrarPartidoAutomaticamente() {
       if (activeMatchIndex === null) return;
       const catData = appData.categorias[currentCat];
       const partido = catData.partidos[activeMatchIndex];
 
-      if (partido.scoreA === partido.scoreB) {
-        alert('⚠️ En Streetball no existe el empate. Jueguen Muerte Súbita (el siguiente punto gana) o tiro libre de desempate.');
-        return;
-      }
-
       pausarTimer();
+      sonarChicharra();
       partido.finalizado = true;
       partido.ganador = partido.scoreA > partido.scoreB ? partido.teamA : partido.teamB;
 
@@ -2917,7 +3567,6 @@ const firebaseConfig = {
       const partidosEstaRonda = catData.partidos.filter(p => p.ronda === partido.ronda);
       if (partidosEstaRonda.length === 1) {
         catData.ganador = partido.ganador;
-        alert(`👑 ¡TENEMOS CAMPEÓN DE ${CAT_CONFIG[currentCat].titulo.toUpperCase()}: ${catData.ganador}!`);
       }
 
       activeMatchIndex = null;
@@ -2988,7 +3637,13 @@ const firebaseConfig = {
         if (secondsLeft <= 0) {
           pausarTimer();
           sonarChicharra();
-          alert('⏰ ¡TIEMPO CUMPLIDO! Verifica el marcador para cerrar el partido.');
+          const partido = appData.categorias[currentCat]?.partidos[activeMatchIndex];
+          if (partido && partido.scoreA !== partido.scoreB) {
+            cerrarPartidoAutomaticamente();
+          } else if (partido) {
+            document.getElementById('sbRoundLabel').textContent = '⚡ MUERTE SÚBITA (PRÓXIMO PUNTO GANA)';
+            emitirEstadoTV();
+          }
         }
       }, 250);
     }
@@ -3112,7 +3767,6 @@ const firebaseConfig = {
         if (tripleSecondsLeft <= 0) {
           pausarTimer();
           sonarChicharra();
-          alert(`⏰ ¡TIEMPO CUMPLIDO PARA ${activeTripleShooter.nombre.toUpperCase()}! Puntaje guardado automáticamente.`);
         }
       }, 250);
     }
@@ -3333,11 +3987,10 @@ const firebaseConfig = {
       catData.ganador = ordenFinal[0];
       persistirDB();
       renderCategoria();
-      alert(`👑 ¡CAMPEÓN DE TRIPLES: ${catData.ganador}!`);
     }
 
     function reiniciarTorneoCategoria() {
-      if (!confirm('¿Reiniciar las llaves y puntajes de esta categoría? (Los inscritos se mantendrán).')) return;
+      if (!confirm('¿Reiniciar las llaves y puntajes de esta categoría? (Los inscritos y sus contactos se mantendrán).')) return;
       pausarTimer();
       const catData = appData.categorias[currentCat];
       catData.ganador = '';
@@ -3360,7 +4013,7 @@ const firebaseConfig = {
     /* ================= EXPORTAR CSV Y PROTECCIÓN LIMPIAR STOP ================= */
     function exportarCSV() {
       let csv = '\uFEFF';
-      csv += 'Stop,Comuna,Fecha,Categoria,Participante/Equipo,Detalle/Puntaje,Campeon Categoria,Chosen Electo\n';
+      csv += 'Stop,Comuna,Fecha,Categoria,Apodo / Equipo,Telefono,Correo,Detalle/Puntaje,Campeon Categoria,Chosen Electo\n';
 
       const chosenName = appData.chosen.elegido || 'Pendiente';
 
@@ -3370,16 +4023,17 @@ const firebaseConfig = {
         const ganador = cat.ganador || 'Pendiente';
 
         if (cat.inscritos.length === 0) {
-          csv += `"${appData.stop.nombre}","${appData.stop.comuna}","${appData.stop.fecha}","${cfg.titulo}","Sin inscritos","-","${ganador}","${chosenName}"\n`;
+          csv += `"${appData.stop.nombre}","${appData.stop.comuna}","${appData.stop.fecha}","${cfg.titulo}","Sin inscritos","","","-","${ganador}","${chosenName}"\n`;
         } else {
           cat.inscritos.forEach(item => {
+            const cInfo = (cat.contactos && cat.contactos[item]) || {};
             let detalle = 'Participante';
             if (cfg.tipo === 'triples') {
               const q = cat.puntosQualy[item] || 0;
               const f = (cat.puntosFinal && cat.puntosFinal[item] !== undefined) ? ` | Final: ${cat.puntosFinal[item]}` : '';
               detalle = `Qualy: ${q}${f}`;
             }
-            csv += `"${appData.stop.nombre}","${appData.stop.comuna}","${appData.stop.fecha}","${cfg.titulo}","${item}","${detalle}","${ganador}","${chosenName}"\n`;
+            csv += `"${appData.stop.nombre}","${appData.stop.comuna}","${appData.stop.fecha}","${cfg.titulo}","${item}","${cInfo.telefono || ''}","${cInfo.correo || ''}","${detalle}","${ganador}","${chosenName}"\n`;
           });
         }
       });
