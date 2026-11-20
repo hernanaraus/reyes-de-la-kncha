@@ -447,6 +447,13 @@
       font-weight: 600;
     }
 
+    .input-group input:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+    }
+
     .input-group input:focus {
       outline: none;
       border-color: var(--orange-main);
@@ -1048,7 +1055,7 @@
     /* ================= ADAPTABILIDAD MÓVIL (TELÉFONOS) ================= */
     @media (max-width: 820px) {
       body {
-        padding-top: 0 !important; /* Elimina el hueco fijo para que la barra fluya sin tapar contenido */
+        padding-top: 0 !important;
       }
 
       header {
@@ -1503,11 +1510,14 @@
         <div class="brush-line"></div>
       </section>
 
-      <!-- Configuración del Stop -->
+      <!-- Configuración del Stop (Solo Editable por Admin) -->
       <section class="stop-setup-card">
         <div class="stop-setup-header">
           <h2>📍 Datos de la Fecha / Stop Actual</h2>
           <span class="status-pill" id="dbStatus">● Conectado a Nube en Vivo</span>
+        </div>
+        <div id="operatorStopLockNotice" class="hidden" style="font-size:0.82rem; color:#facc15; margin-bottom:0.85rem; background:rgba(250,204,21,0.1); border:1px solid rgba(250,204,21,0.3); padding:0.45rem 0.75rem; border-radius:7px;">
+          🔒 <strong>Modo Planillero / Operador:</strong> Solo el Administrador puede crear o modificar la fecha del Stop.
         </div>
         <div class="form-grid">
           <div class="input-group">
@@ -1522,7 +1532,7 @@
             <label for="stopDate">Fecha</label>
             <input type="date" id="stopDate" />
           </div>
-          <button class="btn-primary" onclick="guardarDatosStop()">Guardar Stop</button>
+          <button id="btnSaveStop" class="btn-primary" onclick="guardarDatosStop()">Guardar Stop</button>
         </div>
       </section>
 
@@ -1637,12 +1647,14 @@
           <p id="summaryText">Guarda este Stop en el Historial Anual antes de iniciar una nueva fecha.</p>
         </div>
         <div style="display:flex; gap:0.65rem; flex-wrap:wrap;">
-          <button class="btn-success" onclick="archivarStopEnHistorial()">🏆 Archivar Stop en Historial Anual</button>
+          <button id="btnArchiveStop" class="btn-success hidden" onclick="archivarStopEnHistorial()">🏆 Archivar Stop en Historial Anual</button>
           <button class="btn-secondary" onclick="exportarCSV()">📥 CSV Stop Actual</button>
-          <button class="btn-danger" onclick="abrirModalLimpiarStop()">🗑️ Limpiar Stop</button>
+          <button id="btnClearStop" class="btn-danger hidden" onclick="abrirModalLimpiarStop()">🗑️ Limpiar Stop</button>
         </div>
       </section>
     </div>
+
+    <!-- ================= VISTA 2: PANEL DE COMPETENCIA ================= -->
 
     <!-- ================= VISTA 2: PANEL DE COMPETENCIA ================= -->
     <div id="view-comp" class="hidden">
