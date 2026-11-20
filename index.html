@@ -2,18 +2,22 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Reyes de la Kncha | Liga Anual y Proyección TV - Tiempo Fuera</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
   <!-- Configuración PWA (App Instalable Android / iOS) -->
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#ff4d00" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Reyes Kncha" />
-  <link rel="apple-touch-icon" href="logo-reyes.png" />
+  <link id="appleTouchIcon" rel="apple-touch-icon" href="logo-reyes.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  
   <style>
     :root {
       --bg-dark: #09090b;
@@ -116,7 +120,7 @@
       box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
     }
 
-    /* Header Fijo Superior */
+    /* Header Fijo Superior (Escritorio) */
     header {
       position: fixed;
       top: 0;
@@ -128,7 +132,7 @@
       align-items: center;
       padding: 0.6rem 2rem;
       border-bottom: 1px solid var(--border-subtle);
-      background: rgba(9, 9, 11, 0.94);
+      background: rgba(9, 9, 11, 0.95);
       backdrop-filter: blur(14px);
       gap: 1rem;
       z-index: 1000;
@@ -170,6 +174,12 @@
       flex-wrap: wrap;
     }
 
+    .tf-credit-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     .btn-tv-launch {
       background: linear-gradient(135deg, #ff4d00 0%, #ff7b00 100%);
       color: #000;
@@ -184,6 +194,7 @@
       cursor: pointer;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.35rem;
       box-shadow: 0 0 18px rgba(255, 77, 0, 0.45);
       transition: transform 0.15s, box-shadow 0.15s;
@@ -255,10 +266,14 @@
       text-transform: uppercase;
       letter-spacing: 0.8px;
       border: none;
-      padding: 0.65rem 1.15rem;
+      padding: 0.62rem 1.05rem;
       border-radius: 8px;
       cursor: pointer;
       box-shadow: 0 4px 16px rgba(250, 204, 21, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
     }
 
     .btn-secondary {
@@ -270,6 +285,10 @@
       font-weight: 700;
       font-size: 0.83rem;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
     }
 
     .btn-secondary:hover { background: rgba(255, 255, 255, 0.18); }
@@ -297,6 +316,10 @@
       font-weight: 700;
       font-size: 0.83rem;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
     }
 
     .btn-danger-solid {
@@ -346,7 +369,7 @@
 
     .hero h1 {
       font-family: 'Anton', sans-serif;
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-size: clamp(2.1rem, 5vw, 3.6rem);
       text-transform: uppercase;
       letter-spacing: 1.5px;
       line-height: 1.05;
@@ -591,11 +614,11 @@
 
     .comp-title-box h2 {
       font-family: 'Anton', sans-serif;
-      font-size: 2.2rem;
+      font-size: 2rem;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: var(--orange-main);
-      line-height: 1;
+      line-height: 1.05;
     }
 
     .comp-title-box p {
@@ -742,7 +765,7 @@
       background: linear-gradient(145deg, #141418 0%, #09090b 100%);
       border: 2px solid var(--orange-main);
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 1.35rem;
       margin-bottom: 1.5rem;
       box-shadow: 0 12px 35px rgba(255, 77, 0, 0.2);
     }
@@ -791,7 +814,7 @@
 
     .timer-digits {
       font-family: 'Anton', sans-serif;
-      font-size: 4.2rem;
+      font-size: 4rem;
       letter-spacing: 3px;
       line-height: 1;
       color: #fff;
@@ -838,7 +861,7 @@
 
     .team-name {
       font-family: 'Oswald', sans-serif;
-      font-size: 1.55rem;
+      font-size: 1.5rem;
       text-transform: uppercase;
       margin-bottom: 0.4rem;
       word-break: break-word;
@@ -846,7 +869,7 @@
 
     .team-pts {
       font-family: 'Anton', sans-serif;
-      font-size: 4.8rem;
+      font-size: 4.5rem;
       color: var(--orange-main);
       line-height: 1;
       margin: 0.4rem 0 0.9rem;
@@ -1020,6 +1043,70 @@
       color: var(--text-muted);
       border-top: 1px solid var(--border-subtle);
       background: rgba(9, 9, 11, 0.9);
+    }
+
+    /* ================= ADAPTABILIDAD MÓVIL (TELÉFONOS) ================= */
+    @media (max-width: 820px) {
+      body {
+        padding-top: 0 !important; /* Elimina el hueco fijo para que la barra fluya sin tapar contenido */
+      }
+
+      header {
+        position: relative !important;
+        height: auto !important;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.85rem 1rem;
+        gap: 0.8rem;
+      }
+
+      .brand-left {
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .logo-rk-img {
+        height: 46px;
+      }
+
+      .rk-subtitle {
+        font-size: 0.72rem;
+        padding-left: 0.55rem;
+      }
+
+      .brand-right {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        width: 100%;
+      }
+
+      .brand-right button {
+        width: 100%;
+        padding: 0.55rem 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      .tf-credit-group {
+        grid-column: 1 / -1;
+        justify-content: center;
+        padding-top: 0.45rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .created-by-label {
+        display: block;
+        text-align: right;
+        font-size: 0.65rem;
+      }
+
+      .logo-tf-img {
+        height: 42px;
+      }
+
+      main {
+        padding: 1.1rem 0.9rem;
+      }
     }
 
     /* ================= MODO PROYECCIÓN TV (ESTADIO) ================= */
@@ -1326,14 +1413,6 @@
       letter-spacing: 1px;
       text-transform: uppercase;
     }
-
-    @media (max-width: 640px) {
-      :root { --header-height: 76px; }
-      header { padding: 0.5rem 1rem; }
-      .logo-rk-img { height: 48px; }
-      .logo-tf-img { height: 50px; }
-      .rk-subtitle, .created-by-label { display: none; }
-    }
   </style>
 </head>
 <body>
@@ -1378,7 +1457,7 @@
     </div>
   </div>
 
-  <!-- Barra Superior Fija (Modo Control) -->
+  <!-- Barra Superior (Fija en PC, Desplazable en Teléfonos) -->
   <header id="mainHeader" class="hidden">
     <div class="brand-left" onclick="volverInicio()" title="Volver al Inicio">
       <img
@@ -1401,15 +1480,17 @@
         📺 Pantalla TV
       </button>
       <button class="btn-danger" onclick="cerrarSesionGoogle()" title="Cerrar sesión de operador">
-        Salir
+        🚪 Salir
       </button>
-      <div class="created-by-label">App oficial<br>creada por</div>
-      <img
-        src="logo-tiempofuera.png"
-        alt="Tiempo Fuera"
-        class="logo-tf-img"
-        onerror="this.outerHTML='<div style=\'font-family:Anton,sans-serif;font-style:italic;font-size:1.45rem;color:#fff;text-shadow:0 0 8px #fff;\'>TIEMPO FUERA</div>'"
-      />
+      <div class="tf-credit-group">
+        <div class="created-by-label">App oficial<br>creada por</div>
+        <img
+          src="logo-tiempofuera.png"
+          alt="Tiempo Fuera"
+          class="logo-tf-img"
+          onerror="this.outerHTML='<div style=\'font-family:Anton,sans-serif;font-style:italic;font-size:1.45rem;color:#fff;text-shadow:0 0 8px #fff;\'>TIEMPO FUERA</div>'"
+        />
+      </div>
     </div>
   </header>
 
@@ -1552,7 +1633,7 @@
       <!-- Base de Datos Nube y Archivo Anual -->
       <section class="db-panel">
         <div class="db-info">
-          <h3>☁️ Cierre de Stop y Archivo Anual</h3>
+          <h3>☁️ Cierre de Stop y Archivo Anual Firebase</h3>
           <p id="summaryText">Guarda este Stop en el Historial Anual antes de iniciar una nueva fecha.</p>
         </div>
         <div style="display:flex; gap:0.65rem; flex-wrap:wrap;">
@@ -1581,7 +1662,6 @@
       </div>
 
       <div class="comp-grid">
-        <!-- Columna Izquierda: Registro Obligatorio con Contacto + Autocompletado -->
         <div>
           <div class="panel-box">
             <h3>
@@ -1636,7 +1716,6 @@
           <div class="panel-box" id="actionBox"></div>
         </div>
 
-        <!-- Columna Derecha -->
         <div>
           <!-- MODO DUELOS -->
           <div id="duelsArea" class="hidden">
@@ -1890,7 +1969,6 @@
         </div>
       </div>
 
-      <!-- Tabla Consolidada de Chosen y Campeones por Stop -->
       <div class="panel-box" style="border-color:rgba(250,204,21,0.45);">
         <h3>
           <span>🏆 Clasificados a la Gran Final Anual (Por Fecha / Stop)</span>
@@ -1912,7 +1990,6 @@
         </div>
       </div>
 
-      <!-- Padrón Histórico de Jugadores Registrados -->
       <div class="panel-box">
         <h3>
           <span>📒 Padrón Único de Jugadores Registrados (Base de Datos Nube)</span>
@@ -2003,8 +2080,8 @@
     <div class="tv-stage" id="tvStageContent"></div>
 
     <div class="tv-footer">
-      <span>Presiona F11 para pantalla completa</span>
-      <span>Desarrollado por: Tiempo Fuera (@tiempofuera_cl)</span>
+      <span>De la pantalla a la kncha • Presiona F11 para pantalla completa</span>
+      <span>Producción Oficial: Tiempo Fuera (@tiempofuera_cl)</span>
     </div>
   </div>
 
@@ -2014,6 +2091,36 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
   <script>
+    /* ================= REGISTRO SERVICE WORKER Y ÍCONO MÓVIL ================= */
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+
+    // Genera un ícono cuadrado sólido 512x512 para iPhone/iPad
+    (function generarIconoCuadradoApple() {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = 512;
+          canvas.height = 512;
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#09090b';
+          ctx.fillRect(0, 0, 512, 512);
+          const scale = Math.min(430 / img.width, 430 / img.height);
+          const w = img.width * scale;
+          const h = img.height * scale;
+          ctx.drawImage(img, (512 - w) / 2, (512 - h) / 2, w, h);
+          const link = document.getElementById('appleTouchIcon');
+          if (link) link.href = canvas.toDataURL('image/png');
+        } catch (e) {}
+      };
+      img.src = 'logo-reyes.png';
+    })();
+
     /* ================= CONFIGURACIÓN DE FIREBASE ================= */
     const firebaseConfig = {
       apiKey: "AIzaSyCHiOwiYyUitWcoE9OUiAjVTbJf42woSPw",
@@ -2116,8 +2223,8 @@
     }
 
     let appData = crearEstructuraVacia();
-    let playersDirectory = {}; // Padrón histórico desde Firebase
-    let archivedStops = {};    // Historial anual desde Firebase
+    let playersDirectory = {};
+    let archivedStops = {};
 
     let currentCat = null;
     let isChosenViewOpen = false;
@@ -2496,7 +2603,6 @@
       const catData = appData.categorias[currentCat];
       base.categoriaTitulo = cfg.titulo;
 
-      // Si ya existe campeón en la categoría y no hay un duelo/lanzador activo en pantalla, proyecta el campeón automáticamente
       if (catData.ganador && activeMatchIndex === null && !activeTripleShooter) {
         base.modo = 'champion';
         base.campeon = catData.ganador;
@@ -2822,7 +2928,6 @@
         catData.puntosQualy[nombre] = 0;
       }
 
-      // Guardar o actualizar en el Padrón Único en Firebase
       guardarJugadorEnPadron(nombre, telefono, correo);
 
       inputName.value = '';
@@ -3543,13 +3648,11 @@
         document.getElementById('sbScoreB').textContent = partido.scoreB;
       }
 
-      // 1. Si estaban en Muerte Súbita (reloj en 0) y alguien anota un punto de diferencia -> Cierre automático
       if (secondsLeft === 0 && partido.scoreA !== partido.scoreB) {
         cerrarPartidoAutomaticamente();
         return;
       }
 
-      // 2. Si la categoría tiene meta de puntos (5 en 1v1, 7 en 3v3) y alguien la alcanza -> Cierre automático
       if (cfg.metaPts && (partido.scoreA >= cfg.metaPts || partido.scoreB >= cfg.metaPts)) {
         cerrarPartidoAutomaticamente();
         return;
@@ -4096,10 +4199,5 @@
       volverInicio();
     }
   </script>
-  if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
-      });
-    }
 </body>
 </html>
